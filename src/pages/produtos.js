@@ -40,13 +40,24 @@ export default class produtos extends Component {
   goProduto = produto => {
     this.props.navigation.navigate("produto", { produto: produto });
   };
+  
+  goPedidosBackArrow = qtdPd => {
+    if(qtdPd > 0){
+      this.props.navigation.navigate("pedido");
+    }else{
+      this.props.navigation.dismiss();
+    }
+  }
 
   render() {
+    const { navigation } = this.props;
+    const produtosQuantidade = navigation.getParam('qtdPd', 0);
+
     return (
       <Container>
         <Header>
           <Left>
-            <Button transparent onPress={() => this.props.navigation.dismiss()}>
+            <Button transparent onPress={() => this.goPedidosBackArrow(produtosQuantidade)}>
               <Icon
                 name="arrow-back"
                 

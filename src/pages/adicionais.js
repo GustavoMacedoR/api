@@ -50,6 +50,7 @@ class adicionais extends Component {
     novo[id].quantidade = qtd;
     this.setState({ adicionais: novo });
   };
+  
 
   componentDidMount() {}
   render() {

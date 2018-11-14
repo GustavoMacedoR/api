@@ -29,13 +29,15 @@ class produto extends Component {
       item => (novo[item.id] = { id: null, nome: "" })
     );
     this.state = {
+      nome: "lanche",
       atributos: novo,
       adicionais: [],
+      observacoes:"",
       quantidade: 1
     };
   }
   componentDidMount() {
-    // this.gotoAdicionais(this.props.navigation.state.params.produto.grupoadicionals)
+    console.error(this.props.navigation.state.params);
   }
   setAtributo = (atributo_id, valor) => {
     const novo = JSON.parse(JSON.stringify(this.state.atributos));
@@ -44,6 +46,7 @@ class produto extends Component {
       atributos: novo
     });
   };
+ 
 
   clicou = () => {
     this.props.navigation.navigate("pedido", { pedido: this.state });
@@ -92,6 +95,7 @@ class produto extends Component {
               <Icon name="arrow-back" />
             </Button>
           </Left>
+
           <Body>
             <Title>Produto</Title>
           </Body>
@@ -99,7 +103,7 @@ class produto extends Component {
         </Header>
         <Content>
           <View style={styles.container}>
-            <Text style={styles.titulo}>{produto.nome}</Text>
+            <Text style={styles.titulo}>{this.state.nome = produto.nome}</Text>
             <Text style={styles.subtitulo}>{produto.legenda}</Text>
           </View>
           {produto.produtoatributos.length == 0 ? null : (
@@ -165,6 +169,7 @@ class produto extends Component {
               rowSpan={3}
               bordered
               placeholder="Algum detalhe que precisamos saber?"
+              onChangeText={(text) => this.setState({observacoes:text})}
             />
           </View>
 

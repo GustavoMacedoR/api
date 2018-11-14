@@ -23,6 +23,7 @@ class atributos extends Component {
     const {onSelect,atual,atributo,atributo:{id,grupoatributos}} = this.props.navigation.state.params;
     const { navigation } = this.props;
     
+    
     return (
       <Container>
         <Header>

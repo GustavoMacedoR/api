@@ -8,4 +8,4 @@ import pedido from './pedido';
 
 
 
-export { adicionais,atributos,lojas,produto,produtos,pedidos};
+export { adicionais,atributos,lojas,produto,produtos,pedido };

@@ -54,6 +54,7 @@ const Stack = createStackNavigator(
       atributos: atributos,
       adicionais: adicionais
     },
+    
     { mode: "modal", headerMode: "none" }
   );
   const Root = createStackNavigator(
