@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator,createBottomTabNavigator } from "react-navigation";
 import { Button, Text, Icon, Footer, FooterTab } from "native-base";
-import {lojas,produto,produtos,atributos,adicionais,pedido} from "./pages";
+import {lojas,produto,produtos,atributos,adicionais,pedido,cadastro} from "./pages";
 
 
 
@@ -51,6 +51,7 @@ const Stack = createStackNavigator(
       produtos: produtos,
       produto: produto,
       pedido: pedido,
+      cadastro: cadastro,
       atributos: atributos,
       adicionais: adicionais
     },

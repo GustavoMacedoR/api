@@ -37,7 +37,7 @@ class produto extends Component {
     };
   }
   componentDidMount() {
-    console.error(this.props.navigation.state.params);
+    //console.error(this.props.navigation.state.params);
   }
   setAtributo = (atributo_id, valor) => {
     const novo = JSON.parse(JSON.stringify(this.state.atributos));

@@ -72,7 +72,7 @@ export default class pedido extends Component {
    enviaPedido = () =>  {
       Pedido.idPedido = Math.floor((Math.random() * 99999999) + 10000000);
       Pedido.produtos = produtos;
-      console.error(Pedido);
+      this.props.navigation.navigate("cadastro", {pedido:pedido});
    }
 
     render() {
