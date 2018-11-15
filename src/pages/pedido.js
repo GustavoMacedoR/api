@@ -22,6 +22,14 @@ import axios from "../axios";
 import { styles } from "../styles";
 
 var produtos = [];
+var Pedido = {
+  clientName:"username",
+  endereco:"avenida são joão rua 25 numero 10",
+  idPedido: 0,
+  observacoes:"sem observacoes",
+  tipoPagamento:"Cartão de Crédito",
+  produtos: []
+}
 
 class Quantidade extends Component{
   render(){
@@ -39,10 +47,6 @@ export default class pedido extends Component {
     this.state = {
       produtos:[]
     }
-   }
-
-   createDataArray(produtos){
-
    }
 
    setprodutos(){
@@ -65,6 +69,12 @@ export default class pedido extends Component {
     this.props.navigation.navigate("produtos", {qtdPd: produtos.length});
    }
 
+   enviaPedido = () =>  {
+      Pedido.idPedido = Math.floor((Math.random() * 99999999) + 10000000);
+      Pedido.produtos = produtos;
+      console.error(Pedido);
+   }
+
     render() {
       return (
         <Container >
@@ -75,7 +85,7 @@ export default class pedido extends Component {
           </Button>
           </Left>
           <Body>
-            <Title>Pedidos</Title>
+            <Title>Pedido Atual</Title>
           </Body>
           <Right />
         </Header>
@@ -86,8 +96,6 @@ export default class pedido extends Component {
                       <Text>{item.nome}</Text>
                       
                       <Text note >Quantidade:{item.quantidade}</Text>
-
-                      {console.error(item.atributos)}
 
                       <Text note >Atributos:</Text>
                       {Object.keys(item.atributos).map((object,index) => ( 
@@ -112,6 +120,11 @@ export default class pedido extends Component {
             <Button iconLeft block onPress={() => this.voltarCardapio()}>
               <Icon name="ios-list" />
               <Text>Voltar ao Menu</Text>
+            </Button>
+
+            <Button iconLeft block success onPress={() => this.enviaPedido()}>
+              <Icon name="ios-checkmark" />
+              <Text>Confirmar Pedido</Text>
             </Button>
           </View>
         </Container>
