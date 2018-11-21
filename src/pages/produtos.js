@@ -20,15 +20,19 @@ import { styles } from "../styles";
 import axios from "../axios";
 
 export default class produtos extends Component {
-  state = {
-    categorias: []
-  };
 
-  async componentWillMount() {
+    state = {
+      categorias:[]
+    };
 
-    console.log("produtos",this.props)
-    const { id } = this.props.navigation.state.params.loja;
-    const res = await axios.get("loja/" + id);
+  async componentDidMount() {
+
+    const { navigation } = this.props;
+    const produtosQuantidade = navigation.getParam('qtdPd', 0);
+
+    const id = this.props.navigation.state.params.loja._id;
+    const res = await axios.get("loja/produtos/" + id);
+
     this.setState({
       categorias: res.data
     });
@@ -50,9 +54,6 @@ export default class produtos extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
-    const produtosQuantidade = navigation.getParam('qtdPd', 0);
-
     return (
       <Container>
         <Header>
@@ -70,21 +71,7 @@ export default class produtos extends Component {
           <Right />
         </Header>
         <Content>
-          {/* <Thumbnail
-                square
-                source={{
-                  uri:
-                    "https://cdn.pixabay.com/user/2015/01/20/20-56-42-330_250x250.jpg"
-                }}
-              /> */}
-          <View style={styles.container}>
-            <Text style={styles.titulo}>
-              {this.props.navigation.state.params.loja.nome}
-            </Text>
-            <Text style={styles.subtitulo}>
-              {this.props.navigation.state.params.loja.legenda}
-            </Text>
-          </View>
+
           <List>
             {this.state.categorias.map((categoria, categoria_index) => (
               <View key={categoria.id}>
@@ -108,6 +95,15 @@ export default class produtos extends Component {
               </View>
             ))}
           </List>
+
+          <View style={styles.container}>
+            <Text style={styles.titulo}>
+              {this.props.navigation.state.params.loja.nome}
+            </Text>
+            <Text style={styles.subtitulo}>
+              {this.props.navigation.state.params.loja.legenda}
+            </Text>
+          </View>
         </Content>
       </Container>
     );

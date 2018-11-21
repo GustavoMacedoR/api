@@ -20,13 +20,14 @@ import {
   Textarea
 } from "native-base";
 import { styles } from "../styles";
+
 class produto extends Component {
   constructor(props) {
     super(props);
 
     const novo = {};
-    props.navigation.state.params.produto.produtoatributos.map(
-      item => (novo[item.id] = { id: null, nome: "" })
+    props.navigation.state.params.produto.atributos.map(
+      item => (novo[item._id] = { id: null, nome: "" })
     );
     this.state = {
       nome: "lanche",
@@ -71,7 +72,7 @@ class produto extends Component {
   gotoAtributos = atributo => {
     this.props.navigation.navigate("atributos", {
       atributo: atributo,
-      atual: this.state.atributos[atributo.id].id,
+      atual: this.state.atributos[atributo._id].id,
       onSelect: this.setAtributo
     });
   };
@@ -106,19 +107,20 @@ class produto extends Component {
             <Text style={styles.titulo}>{this.state.nome = produto.nome}</Text>
             <Text style={styles.subtitulo}>{produto.legenda}</Text>
           </View>
-          {produto.produtoatributos.length == 0 ? null : (
+          {produto.atributos.length == 0 ? null : (
             <List>
               <Separator bordered>
                 <Text>Atributos</Text>
               </Separator>
-              {produto.produtoatributos.map((item, index) => (
+              {produto.atributos.map((item, index) => (
+
                 <ListItem
                   onPress={() => this.gotoAtributos(item)}
-                  key={item.id}
+                  key={item._id}
                 >
                   <Body>
                     <Text>Escolha {item.nome}</Text>
-                    <Text note>{this.state.atributos[item.id].nome}</Text>
+                    <Text note>{this.state.atributos[item._id].nome}</Text>
                   </Body>
                   <Right>
                     <Icon name="arrow-forward" />

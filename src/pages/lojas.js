@@ -24,19 +24,16 @@ export default class App extends Component {
     lojas: []
   };
   async componentDidMount() {
-    console.log("lojas",this.props)
     const res = await axios.get("loja");
     this.setState({
       lojas: res.data
     });
 
-    this.selectLoja(this.state.lojas[0])
-
   }
     selectLoja = (loja) => {
       this.props.navigation.navigate('stack',{loja:loja})
     }
-    render() { 
+    render() {
       return (
         <Container >
         <Header>
@@ -59,7 +56,7 @@ export default class App extends Component {
                   uri:
                     "https://cdn.pixabay.com/user/2015/01/20/20-56-42-330_250x250.jpg"
                 }}
-              />
+              /> 
             </Left>
             <Body>
               <Text>{item.nome}</Text>

@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const api = axios.create({
-  baseURL: 'http://api.calangoo.com',
+  baseURL: 'http://node.calangoo.com',
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",

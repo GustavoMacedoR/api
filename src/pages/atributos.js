@@ -20,7 +20,7 @@ import { styles } from "../styles";
 class atributos extends Component {
   
   render() {
-    const {onSelect,atual,atributo,atributo:{id,grupoatributos}} = this.props.navigation.state.params;
+    const {onSelect,atual,atributo,atributo:{id,atributos}} = this.props.navigation.state.params;
     const { navigation } = this.props;
     
     
@@ -45,26 +45,26 @@ class atributos extends Component {
           </View>
           <List>
             { 
-              grupoatributos.map(grupo => (
-              <View key={grupo.id}>
+              atributo.grupos.map(grupo => (
+              <View key={grupo._id}>
                 <Separator bordered>
                   <Text>{grupo.nome}</Text>
                 </Separator>
-                {grupo.atributos.map(atributo => (
-                  <ListItem icon key={atributo.id}
+                {grupo.itens.map(item => (
+                  <ListItem icon key={item._id}
                     onPress=
                     {() => {
-                      onSelect(id, atributo);
+                      onSelect(atributo._id, item);
                       navigation.goBack();
                     }}
                     >
                     <Left>
-                      <Button transparent light={atributo.id!=atual}>
+                      <Button transparent light={item._id!=atual}>
                       <Icon name="ios-checkmark-circle" />
                       </Button>
                     </Left>
                     <Body>
-                    <Text>{atributo.nome}</Text>
+                    <Text>{item.nome}</Text>
                     </Body>
                     
                   </ListItem>
