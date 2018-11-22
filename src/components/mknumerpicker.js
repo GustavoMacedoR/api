@@ -35,7 +35,6 @@ export default class mknumberpicker extends Component {
     return (
       <ListItem
         icon
-        key={this.props.key}
         onPress={() => this.setQuantidade(1)}
       >
         <Left>

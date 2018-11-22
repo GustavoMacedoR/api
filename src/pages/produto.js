@@ -19,6 +19,7 @@ import {
   Thumbnail,
   Textarea
 } from "native-base";
+import {ActivityIndicator} from 'react-native';
 import { styles } from "../styles";
 
 class produto extends Component {
@@ -27,24 +28,24 @@ class produto extends Component {
 
     const novo = {};
     props.navigation.state.params.produto.atributos.map(
-      item => (novo[item._id] = { id: null, nome: "" })
+      item => (novo[item._id] = { id: item._id, nome: item.nome, itens:item.itens })
     );
+
     this.state = {
       nome: "lanche",
       atributos: novo,
       adicionais: [],
       observacoes:"",
-      quantidade: 1
-    };
+      quantidade: 1,
+      };
   }
-  componentDidMount() {
-    //console.error(this.props.navigation.state.params);
-  }
+  
   setAtributo = (atributo_id, valor) => {
-    const novo = JSON.parse(JSON.stringify(this.state.atributos));
+    const novo = this.state.atributos;
     novo[atributo_id] = valor;
+    atributos = novo;
     this.setState({
-      atributos: novo
+      atributos: atributos
     });
   };
  
@@ -84,9 +85,10 @@ class produto extends Component {
     });
   };
 
-  render() {
-    // const {produto} = this.props;
-    const { produto } = this.props.navigation.state.params;
+   render() {
+    const produto = this.props.navigation.state.params.produto;
+    console.log(produto);
+   
 
     return (
       <Container>
@@ -102,7 +104,7 @@ class produto extends Component {
           </Body>
           <Right />
         </Header>
-        <Content>
+         <Content>
           <View style={styles.container}>
             <Text style={styles.titulo}>{this.state.nome = produto.nome}</Text>
             <Text style={styles.subtitulo}>{produto.legenda}</Text>
@@ -134,7 +136,7 @@ class produto extends Component {
               <Text>Adicionais</Text>
             </Separator>
             <ListItem
-              onPress={() => this.gotoAdicionais(produto.grupoadicionals)}
+              onPress={() => this.gotoAdicionais(produto.adicionais)}
             >
               <Body>
                 <Text>Escolha os adicionais (opcional)</Text>
@@ -174,26 +176,6 @@ class produto extends Component {
               onChangeText={(text) => this.setState({observacoes:text})}
             />
           </View>
-
-          {/* <View style={styles.produto}>
-          <Text style={styles.nome}>Quantidade:</Text>
-          <NumericInput
-            initValue={1}
-            minValue={1}
-            maxValue={10}
-            onChange={value => console.log(value)}
-          />
-        </View> */}
-          {/* <View style={styles.produto}>
-          <Text style={styles.nome}>react-servações:</Text>
-          <TextInput
-            style={{ borderColor: "gray", borderBottomWidth: 1 }}
-            multiline={true}
-            
-            onChangeText={obs => this.setState({ obs })}
-            value={this.state.text}
-          />
-        </View> */}
           <View style={styles.container}>
             <Button iconLeft block onPress={() => this.clicou()}>
               <Icon name="ios-cart" />
@@ -201,6 +183,7 @@ class produto extends Component {
             </Button>
           </View>
         </Content>
+       
       </Container>
     );
   }

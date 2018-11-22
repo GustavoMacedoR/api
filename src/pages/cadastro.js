@@ -42,19 +42,11 @@ export default class cadastro extends Component {
             </Item>
             <Item floatingLabel >
               <Label>Número de Celular</Label>
-              <Input  />
+              <Input keyboardType={'numeric'} />
             </Item>
             <Item floatingLabel >
               <Label>Endereço</Label>
               <Input />
-            </Item>
-            <Item floatingLabel >
-              <Label>Criar Senha</Label>
-              <Input secureTextEntry />
-            </Item>
-            <Item floatingLabel last>
-              <Label>Confirmar Senha</Label>
-              <Input secureTextEntry />
             </Item>
           </Form>
         </Content>

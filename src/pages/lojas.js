@@ -17,6 +17,9 @@ import {
   Thumbnail
 } from "native-base";
 import axios from "../axios";
+import {YellowBox} from 'react-native';
+YellowBox.ignoreWarnings(['Warning: ...']);
+console.disableYellowBox = true;
 
 
 export default class App extends Component {
@@ -48,7 +51,7 @@ export default class App extends Component {
 
             <List >
         {this.state.lojas.map((item, index) => (
-          <ListItem thumbnail onPress={() => this.selectLoja(item)} key={item.id}>
+          <ListItem thumbnail onPress={() => this.selectLoja(item)} key={item._id}>
             <Left>
               <Thumbnail
                 square

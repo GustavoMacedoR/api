@@ -72,6 +72,7 @@ export default class pedido extends Component {
    enviaPedido = () =>  {
       Pedido.idPedido = Math.floor((Math.random() * 99999999) + 10000000);
       Pedido.produtos = produtos;
+      console.log(produtos);
       this.props.navigation.navigate("cadastro", {pedido:pedido});
    }
 
@@ -91,7 +92,7 @@ export default class pedido extends Component {
         </Header>
           <Content>
             {this.state.produtos.map((item, index) => (
-              <ListItem key={item.id}>
+              <ListItem>
                     <Body>
                       <Text>{item.nome}</Text>
                       
@@ -113,7 +114,7 @@ export default class pedido extends Component {
                     <Right>
                       <Icon name="arrow-forward" />
                     </Right>
-                  </ListItem>
+              </ListItem>
             ))}
           </Content>
           <View style={styles.container}>

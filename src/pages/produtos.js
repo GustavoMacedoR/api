@@ -18,25 +18,25 @@ import {
 } from "native-base";
 import { styles } from "../styles";
 import axios from "../axios";
+import {YellowBox,ActivityIndicator} from 'react-native';
+YellowBox.ignoreWarnings(['Warning: ...']);
 
 export default class produtos extends Component {
 
     state = {
-      categorias:[]
+      categorias:[],
+      isLoading:true
     };
 
   async componentDidMount() {
-
-    const { navigation } = this.props;
-    const produtosQuantidade = navigation.getParam('qtdPd', 0);
 
     const id = this.props.navigation.state.params.loja._id;
     const res = await axios.get("loja/produtos/" + id);
 
     this.setState({
-      categorias: res.data
+      isLoading: false,
+      categorias: res.data.produtos
     });
-
     // this.props.navigation.navigate("produto", { produto: this.state.categorias[0].produtos[0] });
   }
   
@@ -54,6 +54,18 @@ export default class produtos extends Component {
   }
 
   render() {
+
+    if(this.state.isLoading){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+          <ActivityIndicator/>
+        </View>
+      )
+    }
+
+    const { navigation } = this.props;
+    const produtosQuantidade = navigation.getParam('qtdPd', 0);
+
     return (
       <Container>
         <Header>
@@ -71,16 +83,23 @@ export default class produtos extends Component {
           <Right />
         </Header>
         <Content>
-
-          <List>
+          <View style={styles.container}>
+            <Text style={styles.titulo}>
+              {this.props.navigation.state.params.loja.nome}
+            </Text>
+            <Text style={styles.subtitulo}>
+              {this.props.navigation.state.params.loja.legenda}
+            </Text>
+          </View>
+           <List>
             {this.state.categorias.map((categoria, categoria_index) => (
-              <View key={categoria.id}>
+              <View key={categoria._id}>
                 <Separator bordered>
                   <Text>{categoria.nome}</Text>
                 </Separator>
                 {categoria.produtos.map((produto, produto_index) => (
                   <ListItem
-                    key={produto.id}
+                    key={produto._id}
                     onPress={() => this.goProduto(produto)}
                   >
                     <Body>
@@ -96,14 +115,6 @@ export default class produtos extends Component {
             ))}
           </List>
 
-          <View style={styles.container}>
-            <Text style={styles.titulo}>
-              {this.props.navigation.state.params.loja.nome}
-            </Text>
-            <Text style={styles.subtitulo}>
-              {this.props.navigation.state.params.loja.legenda}
-            </Text>
-          </View>
         </Content>
       </Container>
     );

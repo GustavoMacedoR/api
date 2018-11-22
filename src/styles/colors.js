@@ -1,7 +1,7 @@
 export default {
   
   header: '#ba222b',
-  primary: '#007aff',
+  primary: '#ba222b',
   success: '#5cb85c',
   danger: '#d9534f',
   warning: '#f0ad4e',

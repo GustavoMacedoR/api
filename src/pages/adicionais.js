@@ -21,15 +21,16 @@ import {
 import MkNumberPicker from "../components/mknumerpicker";
 import { styles, colors } from "../styles";
 class adicionais extends Component {
+  
   constructor(props) {
     super(props);
-
+    
     const novo = {};
     props.navigation.state.params.opcoes.map(grupo =>
-      grupo.adicionals.map(
+      grupo.itens.map(
         adicional =>
-          (novo[adicional.id] = {
-            id: adicional.id,
+          (novo[adicional._id] = {
+            id: adicional._id,
             quantidade: 0,
             nome: adicional.nome
           })
@@ -50,9 +51,7 @@ class adicionais extends Component {
     novo[id].quantidade = qtd;
     this.setState({ adicionais: novo });
   };
-  
 
-  componentDidMount() {}
   render() {
     const { onConfirm, opcoes } = this.props.navigation.state.params;
     const { navigation } = this.props;
@@ -75,15 +74,15 @@ class adicionais extends Component {
           </View>
           <List>
             {opcoes.map(grupo => (
-              <View key={grupo.id}>
+              <View key={grupo._id}>
                 <Separator bordered>
                   <Text>{grupo.nome}</Text>
                 </Separator>
-                {grupo.adicionals.map(adicional => (
+                {grupo.itens.map((adicional,index) => (
                   <MkNumberPicker
-                    key={adicionais.id}
+                    key={index}
                     onChange={e => {
-                      this.setQuantidade(adicional.id, e);
+                      this.setQuantidade(adicional._id, e);
                     }}
                     titulo={adicional.nome}
                     subtitulo={adicional.valor}

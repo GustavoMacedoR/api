@@ -43,9 +43,9 @@ class atributos extends Component {
           <View style={styles.container}>
             <Text style={styles.titulo}>{atributo.nome}</Text>
           </View>
-          <List>
-            { 
-              atributo.grupos.map(grupo => (
+          
+            <List>
+            {atributo.grupos.map(grupo => (
               <View key={grupo._id}>
                 <Separator bordered>
                   <Text>{grupo.nome}</Text>
@@ -72,6 +72,7 @@ class atributos extends Component {
               </View>
             ))}
           </List>
+
         </Content>
       </Container>
     );
