@@ -14,18 +14,16 @@ import {
   Button,
   Icon,
   View,
-  Thumbnail
 } from "native-base";
 import { styles } from "../styles";
 import axios from "../axios";
-import {YellowBox,ActivityIndicator} from 'react-native';
+import {YellowBox} from 'react-native';
 YellowBox.ignoreWarnings(['Warning: ...']);
 
 export default class produtos extends Component {
 
     state = {
-      categorias:[],
-      isLoading:true
+      categorias:[]
     };
 
   async componentDidMount() {
@@ -34,7 +32,6 @@ export default class produtos extends Component {
     const res = await axios.get("loja/produtos/" + id);
 
     this.setState({
-      isLoading: false,
       categorias: res.data.produtos
     });
     // this.props.navigation.navigate("produto", { produto: this.state.categorias[0].produtos[0] });
@@ -54,14 +51,6 @@ export default class produtos extends Component {
   }
 
   render() {
-
-    if(this.state.isLoading){
-      return(
-        <View style={{flex: 1, padding: 20}}>
-          <ActivityIndicator/>
-        </View>
-      )
-    }
 
     const { navigation } = this.props;
     const produtosQuantidade = navigation.getParam('qtdPd', 0);

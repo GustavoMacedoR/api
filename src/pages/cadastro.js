@@ -15,10 +15,39 @@ import {
         Title,
         Text,
         Thumbnail } from 'native-base';
+import {AsyncStorage} from 'react-native';
+import axios from "../axios";
 
 export default class cadastro extends Component {
   
+  state = {
+    nome: "", //apenas no register
+    celular: "",
+    password: "123"
+  }
+
+  cadastraUsuario = () =>{
+
+     console.log(this.state);
+
+    axios.post('https://node.calangoo.com/cliente/register', 
+      this.state
+    )
+    .then(function (response) {
+      console.log(response.data);
+      AsyncStorage.setItem('test', JSON.stringify(response.data));
+      AsyncStorage.getItem('test', (err, result) => {
+        console.log(result);
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  
   render() {
+
+    console.log(this.state);
     
     return (
       <Container>
@@ -38,20 +67,16 @@ export default class cadastro extends Component {
           <Form>
             <Item floatingLabel >
               <Label>Nome de Usuário</Label>
-              <Input />
+              <Input onChangeText={(text) => this.setState({nome:text})} />
             </Item>
             <Item floatingLabel >
               <Label>Número de Celular</Label>
-              <Input keyboardType={'numeric'} />
-            </Item>
-            <Item floatingLabel >
-              <Label>Endereço</Label>
-              <Input />
+              <Input keyboardType={'numeric'} onChangeText={(text) => this.setState({celular:text})} />
             </Item>
           </Form>
         </Content>
         
-        <Button iconLeft block success >
+        <Button iconLeft block success onPress={() => this.cadastraUsuario()}>
               <Icon name="ios-checkmark" />
               <Text>Confirmar Cadastro</Text>
         </Button>

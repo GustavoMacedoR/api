@@ -8,17 +8,12 @@ import {
   Body,
   Left,
   Right,
-  List,
   ListItem,
   Text,
-  Separator,
   Button,
   Icon,
   View,
-  Thumbnail,
-  Accordion
 } from "native-base";
-import axios from "../axios";
 import { styles } from "../styles";
 
 var produtos = [];

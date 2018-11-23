@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import MkNumberPicker from "../components/mknumerpicker";
-import NumericInput from "react-native-numeric-input";
 import {
   Container,
   Header,
@@ -16,10 +15,8 @@ import {
   Button,
   Icon,
   View,
-  Thumbnail,
   Textarea
 } from "native-base";
-import {ActivityIndicator} from 'react-native';
 import { styles } from "../styles";
 
 class produto extends Component {
@@ -28,7 +25,7 @@ class produto extends Component {
 
     const novo = {};
     props.navigation.state.params.produto.atributos.map(
-      item => (novo[item._id] = { id: item._id, nome: item.nome, itens:item.itens })
+      item => (novo[item._id] = { id: item._id, nome:""})
     );
 
     this.state = {
@@ -87,9 +84,6 @@ class produto extends Component {
 
    render() {
     const produto = this.props.navigation.state.params.produto;
-    console.log(produto);
-   
-
     return (
       <Container>
         <Header>

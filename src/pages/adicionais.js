@@ -9,22 +9,19 @@ import {
   Left,
   Right,
   List,
-  ListItem,
   Text,
   Separator,
   Button,
   Icon,
-  View,
-  Thumbnail,
-  Badge
+  View
 } from "native-base";
 import MkNumberPicker from "../components/mknumerpicker";
 import { styles, colors } from "../styles";
 class adicionais extends Component {
-  
+
   constructor(props) {
     super(props);
-    
+
     const novo = {};
     props.navigation.state.params.opcoes.map(grupo =>
       grupo.itens.map(
@@ -78,7 +75,7 @@ class adicionais extends Component {
                 <Separator bordered>
                   <Text>{grupo.nome}</Text>
                 </Separator>
-                {grupo.itens.map((adicional,index) => (
+                {grupo.itens.map((adicional, index) => (
                   <MkNumberPicker
                     key={index}
                     onChange={e => {
