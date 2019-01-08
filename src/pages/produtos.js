@@ -13,9 +13,11 @@ import {
   Separator,
   Button,
   Icon,
-  View
+  View,
+  Badge,
+  Fab
 } from 'native-base'
-import { styles } from '../styles'
+import { styles, colors } from '../styles'
 import axios from '../axios'
 import { YellowBox } from 'react-native'
 import { connect } from 'react-redux'
@@ -43,7 +45,7 @@ class produtos extends Component {
 
   render () {
     const { navigation } = this.props
-
+    const loja = this.props.navigation.state.params.loja
     return (
       <Container>
         <Header>
@@ -77,7 +79,16 @@ class produtos extends Component {
                     <Separator bordered>
                       <Text>{categoria.nome}</Text>
                     </Separator>
-                    {categoria.produtos.map((produto, produto_index) => (
+                    {categoria.produtos.map((produto, produto_index) => {
+                      
+                      var count = 0
+                      this.props.store.pedido.lista.map(lista=>{
+                        if (produto._id == lista.produto._id)
+                          count += parseInt(lista.produto_opc.quantidade)
+
+                      }) 
+
+                      return (
                       <ListItem
                         key={produto._id}
                         onPress={() => this.goProduto(produto)}
@@ -90,15 +101,31 @@ class produtos extends Component {
                           <Text note>{produto.legenda}</Text>
                         </Body>
                         <Right>
-                          <Icon name='arrow-forward' />
+                        {count == 0
+                        ? (<Icon name='arrow-forward' />)
+                        : (<Badge danger>
+                          <Text>{count}</Text>
+                        </Badge>)
+                        }
+                        
+                          
                         </Right>
                       </ListItem>
-                    ))}
+                    )})}
                   </View>
                 )
               )}
           </List>
         </Content>
+        {loja._id != this.props.store.pedido.loja._id ? null : (
+          <Fab
+            style={{ backgroundColor: colors.danger }}
+            position='bottomRight'
+            onPress={() => this.props.navigation.navigate('pedido')}
+          >
+            <Icon name='ios-cart' />
+          </Fab>
+        )}
       </Container>
     )
   }

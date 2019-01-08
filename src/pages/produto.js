@@ -17,7 +17,7 @@ import {
   View,
   Textarea
 } from 'native-base'
-import { styles } from '../styles'
+import { styles, colors } from '../styles'
 import { addProduto } from '../actions'
 import { connect } from 'react-redux'
 class produto extends Component {
@@ -154,7 +154,7 @@ class produto extends Component {
                   <Body>
                     <Text>{item.nome}</Text>
                     {!this.state.atributos[item._id]._id ? (
-                      <Text note>Selecione</Text>
+                      <Text style={{color:colors.danger}}>Selecione</Text>
                     ) : (
                       <Text note>
                         {this.state.atributos[item._id].nome}{' '}
