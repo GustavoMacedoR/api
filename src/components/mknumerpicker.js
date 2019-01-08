@@ -49,7 +49,7 @@ export default class mknumberpicker extends Component {
         </Left>
         <Body>
           <Text>{this.props.titulo}</Text>
-          {this.props.subtitulo ? <Text note>R$ {this.props.subtitulo}</Text> : null}
+          {this.props.subtitulo ? <Text note>{this.props.subtitulo}</Text> : null}
         </Body>
         <Right>
           <Badge

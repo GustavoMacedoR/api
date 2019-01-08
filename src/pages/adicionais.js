@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
 import {
   Container,
@@ -14,50 +14,59 @@ import {
   Button,
   Icon,
   View
-} from "native-base";
-import MkNumberPicker from "../components/mknumerpicker";
-import { styles, colors } from "../styles";
+} from 'native-base'
+import MkNumberPicker from '../components/mknumerpicker'
+import { styles, colors } from '../styles'
+
 class adicionais extends Component {
+  constructor (props) {
+    super(props)
 
-  constructor(props) {
-    super(props);
-
-    const novo = {};
+    const novo = {}
     props.navigation.state.params.opcoes.map(grupo =>
       grupo.itens.map(
         adicional =>
           (novo[adicional._id] = {
-            id: adicional._id,
+            _id: adicional._id,
             quantidade: 0,
-            nome: adicional.nome
+            nome: adicional.nome,
+            valor: adicional.valor
           })
       )
-    );
+    )
 
-    props.navigation.state.params.atual.map(
-      item => (novo[item.id].quantidade = item.quantidade)
-    );
+    // console.log(novo)
+    // console.log(props.navigation.state.params.atual)
+
+    props.navigation.state.params.atual.map(item => {
+     
+      if (novo[item._id]){
+       novo[item._id].quantidade = item.quantidade
+       
+      }
+    })
+    console.log(novo)
 
     this.state = {
       adicionais: novo
-    };
+    }
   }
 
-  setQuantidade = (id, qtd) => {
-    const novo = JSON.parse(JSON.stringify(this.state.adicionais));
-    novo[id].quantidade = qtd;
-    this.setState({ adicionais: novo });
-  };
+  setQuantidade = (_id, qtd) => {
+    const novo = JSON.parse(JSON.stringify(this.state.adicionais))
+    novo[_id].quantidade = qtd
+    this.setState({ adicionais: novo })
+  }
 
-  render() {
-    const { onConfirm, opcoes } = this.props.navigation.state.params;
-    const { navigation } = this.props;
+  render () {
+    const { onConfirm, opcoes } = this.props.navigation.state.params
+    const { navigation } = this.props
     return (
       <Container>
         <Header>
           <Left>
             <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
+              <Icon name='arrow-back' />
             </Button>
           </Left>
           <Body>
@@ -79,13 +88,13 @@ class adicionais extends Component {
                   <MkNumberPicker
                     key={index}
                     onChange={e => {
-                      this.setQuantidade(adicional._id, e);
+                      this.setQuantidade(adicional._id, e)
                     }}
-                    titulo={adicional.nome}
-                    subtitulo={adicional.valor}
-                    inicial="0"
-                    min="0"
-                    max="10"
+                    titulo={adicional.nome + ' - R$ '+adicional.valor}
+                    
+                    inicial={this.state.adicionais[adicional._id].quantidade}
+                    min='0'
+                    max='10'
                   />
                 ))}
               </View>
@@ -96,17 +105,17 @@ class adicionais extends Component {
               iconLeft
               block
               onPress={() => {
-                onConfirm(this.state.adicionais);
-                navigation.goBack();
+                onConfirm(this.state.adicionais)
+                navigation.goBack()
               }}
             >
-              <Icon name="ios-checkmark" />
+              <Icon name='ios-checkmark' />
               <Text>Confirmar</Text>
             </Button>
           </View>
         </Content>
       </Container>
-    );
+    )
   }
 }
-export default adicionais;
+export default adicionais

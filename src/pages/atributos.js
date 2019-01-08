@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
   Container,
   Header,
@@ -15,23 +15,24 @@ import {
   Icon,
   View,
   Thumbnail
-} from "native-base";
-import { styles } from "../styles";
+} from 'native-base'
+import { styles } from '../styles'
 class atributos extends Component {
-  
-  render() {
-    const {onSelect,atual,atributo,atributo:{id,atributos}} = this.props.navigation.state.params;
-    const { navigation } = this.props;
-    
-    
+  render () {
+    const {
+      onSelect,
+      atual,
+      atributo,
+      atributo: { _id, atributos }
+    } = this.props.navigation.state.params
+    const { navigation } = this.props
+
     return (
       <Container>
         <Header>
           <Left>
             <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon
-                name="arrow-back"
-              />
+              <Icon name='arrow-back' />
             </Button>
           </Left>
           <Body>
@@ -43,39 +44,38 @@ class atributos extends Component {
           <View style={styles.container}>
             <Text style={styles.titulo}>{atributo.nome}</Text>
           </View>
-          
-            <List>
+
+          <List>
             {atributo.grupos.map(grupo => (
               <View key={grupo._id}>
                 <Separator bordered>
                   <Text>{grupo.nome}</Text>
                 </Separator>
                 {grupo.itens.map(item => (
-                  <ListItem icon key={item._id}
-                    onPress=
-                    {() => {
-                      onSelect(atributo._id, item);
-                      navigation.goBack();
+                  <ListItem
+                    icon
+                    key={item._id}
+                    onPress={() => {
+                      onSelect(atributo._id, item)
+                      navigation.goBack()
                     }}
-                    >
+                  >
                     <Left>
-                      <Button transparent light={item._id!=atual}>
-                      <Icon name="ios-checkmark-circle" />
+                      <Button transparent light={item._id != atual}>
+                        <Icon name='ios-checkmark-circle' />
                       </Button>
                     </Left>
                     <Body>
-                    <Text>{item.nome}</Text>
+                      <Text>{item.nome} {item.valor == 0 ? null : ' - R$ ' + item.valor }</Text>
                     </Body>
-                    
                   </ListItem>
                 ))}
               </View>
             ))}
           </List>
-
         </Content>
       </Container>
-    );
+    )
   }
 }
-export default atributos;
+export default atributos

@@ -10,7 +10,7 @@ var styles = StyleSheet.create({
     },
     titulo:{
         color:colors.dark,
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
     },
     subtitulo:{
