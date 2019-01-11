@@ -17,9 +17,9 @@ export const atualizaProduto = async _id => {
 export const addProduto = async item => {
   await store.dispatch({ type: 'ADD_PRODUTO', item })
   await AsyncStorage.setItem('pedido', JSON.stringify(store.getState().pedido))
-
   console.log('addProduto')
 }
+
 export const removeProduto = async item => {
   await store.dispatch({ type: 'REMOVE_PRODUTO', item })
   if (store.getState().pedido.lista.length == 0) {
@@ -32,10 +32,50 @@ export const removeProduto = async item => {
     )
     return false
   }
-
   return true
 }
+
+export const addEnderecoPedido = async item => {
+  await store.dispatch({ type: 'ADD_ENDERECO_PEDIDO', item })
+  await AsyncStorage.setItem('pedido', JSON.stringify(store.getState().pedido))
+}
+
+export const addBusca = async item => {
+  await store.dispatch({ type: 'ADD_BUSCA', item })
+  await AsyncStorage.setItem('pedido', JSON.stringify(store.getState().pedido))
+}
+export const addObservacao = async item => {
+  await store.dispatch({ type: 'ADD_OBSERVACAO', item })
+  await AsyncStorage.setItem('pedido', JSON.stringify(store.getState().pedido))
+}
+export const addEndereco = async item => {
+  await store.dispatch({ type: 'ADD_ENDERECO', item })
+  await AsyncStorage.setItem('endereco', JSON.stringify(store.getState().endereco))
+  addEnderecoPedido(item)
+  
+}
+
+export const addTipoPagamento = async item => {
+  await store.dispatch({ type: 'ADD_TIPO_PAGAMENTO', item })
+  await AsyncStorage.setItem('pedido', JSON.stringify(store.getState().pedido))
+}
+
 export const carregaPedido = async item => {
   store.dispatch({ type: 'CARREGA_PEDIDO', item })
   console.log('carregaPedido')
 }
+export const carregaEndereco = async item => {
+  store.dispatch({ type: 'CARREGA_ENDERECO', item })
+  console.log('carregaEndereco')
+}
+
+export const carregaCliente = async item => {
+  store.dispatch({ type: 'CARREGA_CLIENTE', item })
+  console.log('carregaEndereco')
+}
+
+export const clearPedido = async item => {
+   store.dispatch({ type: 'CLEAR_PEDIDO', item })
+   AsyncStorage.removeItem('pedido')
+}
+

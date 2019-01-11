@@ -18,7 +18,7 @@ import {
   Item,
   Input
 } from 'native-base'
-import { atualizaLoja, carregaPedido } from '../actions'
+import { atualizaLoja, carregaPedido,carregaEndereco,carregaCliente } from '../actions'
 import { connect } from 'react-redux'
 import { YellowBox } from 'react-native'
 import { AsyncStorage } from 'react-native'
@@ -30,14 +30,24 @@ class lojas extends Component {
   state = { pesquisa: '' }
   async componentDidMount () {
     const pedido = await AsyncStorage.getItem('pedido', false)
+    const endereco = await AsyncStorage.getItem('endereco', false)
+    const cliente = await AsyncStorage.getItem('cliente', false)
 
     if (pedido) {
       carregaPedido(JSON.parse(pedido))
-    } else {
-      await AsyncStorage.removeItem('pedido')
     }
+
+    if (endereco) {
+      carregaEndereco(JSON.parse(endereco))
+    }
+
+    if (cliente) {
+      carregaCliente(JSON.parse(cliente))
+    }
+
     // console.log(pedido)
     // await AsyncStorage.removeItem('pedido')
+    // await AsyncStorage.removeItem('endereco')
     atualizaLoja()
 
     // this.props.navigation.navigate('pedido')
@@ -89,7 +99,6 @@ class lojas extends Component {
           ) : null}
         </Header>
         {/* <Header>
-
           <Left />
           <Body>
             <Title>Restaurantes</Title>
@@ -106,7 +115,8 @@ class lojas extends Component {
             {lojas.map(item => (
               <ListItem onPress={() => this.selectLoja(item)} key={item._id}>
                 <Body>
-                  <Text>{item.nome}</Text>
+                  
+                  <Text >{item.nome}</Text>
                   <Text note>{item.legenda}</Text>
                 </Body>
                 <Right>

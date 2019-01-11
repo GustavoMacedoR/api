@@ -10,12 +10,12 @@ var styles = StyleSheet.create({
     },
     titulo:{
         color:colors.dark,
-        fontSize: 20,
+        fontSize: fonts.bigger,
         fontWeight: 'bold',
     },
     subtitulo:{
         color:colors.regular,
-        fontSize: 14,
+        fontSize: fonts.regular,
     }
     
   });

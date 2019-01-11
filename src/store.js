@@ -32,6 +32,31 @@ categoria = (state = {}, action) => {
   }
 }
 
+endereco = (state = [], action) => {
+  var novo = []
+  switch (action.type) {
+    case 'CARREGA_ENDERECO':
+      return action.item
+    case 'ADD_ENDERECO':
+      novo = [...state]
+      novo.push(action.item)
+      return novo
+    default:
+      return state
+  }
+}
+cliente = (state = {}, action) => {
+  var novo = {}
+  switch (action.type) {
+    case 'CARREGA_CLIENTE':
+      return action.item
+    case 'CLEAR_CLIENTE':
+      return novo
+    default:
+      return state
+  }
+}
+
 pedido = (state = { loja: {}, lista: [] }, action) => {
   const { type, item } = action
   var novo = { loja: {}, lista: [] }
@@ -49,15 +74,34 @@ pedido = (state = { loja: {}, lista: [] }, action) => {
       novo = { ...state }
       novo.lista.splice(item, 1)
       return novo
+
+    case 'ADD_BUSCA':
+      novo = { ...state }
+      novo.endereco = undefined
+      novo.mododeentrega = 'BUSCAR'
+      return novo
+
+    case 'ADD_ENDERECO_PEDIDO':
+      novo = { ...state }
+      novo.endereco = action.item
+      novo.mododeentrega = 'RECEBER'
+      return novo
+    case 'ADD_TIPO_PAGAMENTO':
+      novo = { ...state }
+      novo.tipopagamento = action.item
+      return novo 
+    case 'ADD_OBSERVACAO':
+      novo = { ...state }
+      novo.observacao = action.item
+      return novo
     case 'CARREGA_PEDIDO':
       return action.item
     case 'CLEAR_PEDIDO':
       return novo
-
     default:
       return state
   }
 }
 
-const rootReducer = combineReducers({ loja, categoria, pedido })
+const rootReducer = combineReducers({ loja, categoria, pedido, endereco,cliente })
 export default rootReducer

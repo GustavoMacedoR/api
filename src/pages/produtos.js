@@ -69,7 +69,6 @@ class produtos extends Component {
             <Text style={styles.titulo}>{this.state.loja.nome}</Text>
             <Text style={styles.subtitulo}>{this.state.loja.legenda}</Text>
           </View>
-
           <List>
             {!this.props.store.categoria[this.state.loja._id]
               ? null
@@ -79,15 +78,12 @@ class produtos extends Component {
                     <Separator bordered>
                       <Text>{categoria.nome}</Text>
                     </Separator>
-                    {categoria.produtos.map((produto, produto_index) => {
-                      
+                    {categoria.produtos.map((produto, produto_index) => {                
                       var count = 0
                       this.props.store.pedido.lista.map(lista=>{
                         if (produto._id == lista.produto._id)
                           count += parseInt(lista.produto_opc.quantidade)
-
                       }) 
-
                       return (
                       <ListItem
                         key={produto._id}
@@ -107,8 +103,6 @@ class produtos extends Component {
                           <Text>{count}</Text>
                         </Badge>)
                         }
-                        
-                          
                         </Right>
                       </ListItem>
                     )})}

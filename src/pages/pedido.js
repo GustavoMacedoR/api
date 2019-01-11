@@ -20,17 +20,9 @@ import {
 } from 'native-base'
 import { styles, colors } from '../styles'
 import { connect } from 'react-redux'
-import { removeProduto } from '../actions'
-import { NavigationActions } from 'react-navigation';
-var produtos = []
-var Pedido = {
-  clientName: 'username',
-  endereco: 'avenida são joão rua 25 numero 10',
-  idPedido: 0,
-  observacoes: 'sem observacoes',
-  tipoPagamento: 'Cartão de Crédito',
-  produtos: []
-}
+import { removeProduto,addBusca } from '../actions'
+import { NavigationActions } from 'react-navigation'
+
 
 class pedido extends Component {
   constructor (props) {
@@ -38,17 +30,22 @@ class pedido extends Component {
     console.log(this.props.store.pedido)
   }
   voltarCardapio = () => {
-    // console.log(this.props.navigation)
-    // this.props.navigation.popToTop()
-    this.props.navigation.navigate('produtos',{ loja: this.props.store.pedido.loja })
-
+    this.props.navigation.navigate('produtos', {
+      loja: this.props.store.pedido.loja
+    })
   }
 
-  enviaPedido = () => {
-    // Pedido.idPedido = Math.floor((Math.random() * 99999999) + 10000000);
-    // Pedido.produtos = produtos;
-    // console.log(produtos);
-    // this.props.navigation.navigate("cadastro", {pedido:pedido});
+  receberEmCasa = () => {
+    if (this.props.store.endereco.length > 0) {
+      this.props.navigation.navigate('enderecos')
+    } else {
+      this.props.navigation.navigate('endereco')
+    }
+  }
+
+  buscarNoRestaurante = () => {
+      addBusca()
+      this.props.navigation.navigate('contato')
   }
 
   render () {
@@ -103,9 +100,9 @@ class pedido extends Component {
                             onPress: async () => {
                               const listaVazia = await removeProduto(index)
                               // console.log(aindaTem)
-                             if( listaVazia){
-                              this.props.navigation.dismiss()
-                             }
+                              if (listaVazia) {
+                                this.props.navigation.dismiss()
+                              }
                             }
                           },
                           { text: 'Não', onPress: () => {} }
@@ -154,42 +151,22 @@ class pedido extends Component {
             </Body>
           </ListItem>
           <Separator />
-          <Grid>
-            <Col>
-              <TouchableOpacity
-                onPress={() => this.voltarCardapio()}
-                style={{
-                  backgroundColor: colors.info,
-                  height: 100,
-                  flex: 1,
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
-                <Text style={{ color: colors.white ,fontSize:24,textAlign:'center'}}>
-                  Adicionar mais produtos
-                </Text>
-              </TouchableOpacity>
-            </Col>
-            <Col>
-              <TouchableOpacity
-                onPress={() => this.enviaPedido()}
-                style={{
-                  backgroundColor: colors.success,
-                  height: 100,
-                  flex: 1,
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
-                <Text style={{ color: colors.white,fontSize:24,textAlign:'center' }}>Concluir Pedido</Text>
-              </TouchableOpacity>
-            </Col>
-          </Grid>
 
-          <Separator />
+          <Button info block large onPress={() => this.voltarCardapio()}>
+            <Text>Adicionar mais produtos</Text>
+          </Button>
+          <View style={{height:10}}/>
+          <Button info block success large onPress={() => this.receberEmCasa()}>
+            <Text>Receber em casa</Text>
+          </Button>
+          <View style={{height:10}}/>
+          <Button info block warning large onPress={() => this.buscarNoRestaurante()}>
+            <Text>Buscar no Restaurante</Text>
+          </Button>
+
+          
+
+          
         </Content>
       </Container>
     )
