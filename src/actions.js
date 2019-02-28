@@ -7,6 +7,10 @@ export const atualizaLoja = async () => {
   store.dispatch({ type: 'SET_LOJA_LIST', itens: res.data })
   console.log('atualizaLoja')
 }
+export const atualizaBairro = async () => {
+  const res = await axios.get('bairros')
+  store.dispatch({ type: 'SET_BAIRRO_LIST', itens: res.data })
+}
 
 export const atualizaProduto = async _id => {
   const res = await axios.get('loja/produtos/' + _id)
@@ -50,9 +54,11 @@ export const addObservacao = async item => {
 }
 export const addEndereco = async item => {
   await store.dispatch({ type: 'ADD_ENDERECO', item })
-  await AsyncStorage.setItem('endereco', JSON.stringify(store.getState().endereco))
+  await AsyncStorage.setItem(
+    'endereco',
+    JSON.stringify(store.getState().endereco)
+  )
   addEnderecoPedido(item)
-  
 }
 
 export const addTipoPagamento = async item => {
@@ -61,21 +67,27 @@ export const addTipoPagamento = async item => {
 }
 
 export const carregaPedido = async item => {
-  store.dispatch({ type: 'CARREGA_PEDIDO', item })
-  console.log('carregaPedido')
+  store.dispatch({ type: 'CARREGA_PEDIDO', item }) 
 }
 export const carregaEndereco = async item => {
   store.dispatch({ type: 'CARREGA_ENDERECO', item })
-  console.log('carregaEndereco')
 }
-
 export const carregaCliente = async item => {
   store.dispatch({ type: 'CARREGA_CLIENTE', item })
-  console.log('carregaEndereco')
 }
 
+
+export const setCliente = async item => {
+  store.dispatch({ type: 'CARREGA_CLIENTE', item })
+  await AsyncStorage.setItem('cliente', JSON.stringify(store.getState().cliente))
+}
+
+
+export const clearCliente = async item => {
+  store.dispatch({ type: 'CLEAR_CLIENTE', item })
+  await AsyncStorage.removeItem('cliente')
+}
 export const clearPedido = async item => {
-   store.dispatch({ type: 'CLEAR_PEDIDO', item })
-   AsyncStorage.removeItem('pedido')
+  store.dispatch({ type: 'CLEAR_PEDIDO', item })
+  AsyncStorage.removeItem('pedido')
 }
-

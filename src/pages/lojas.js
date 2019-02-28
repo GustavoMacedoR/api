@@ -18,7 +18,7 @@ import {
   Item,
   Input
 } from 'native-base'
-import { atualizaLoja, carregaPedido,carregaEndereco,carregaCliente } from '../actions'
+import { atualizaLoja, atualizaBairro,carregaPedido,carregaEndereco,carregaCliente } from '../actions'
 import { connect } from 'react-redux'
 import { YellowBox } from 'react-native'
 import { AsyncStorage } from 'react-native'
@@ -49,6 +49,7 @@ class lojas extends Component {
     // await AsyncStorage.removeItem('pedido')
     // await AsyncStorage.removeItem('endereco')
     atualizaLoja()
+    atualizaBairro()
 
     // this.props.navigation.navigate('pedido')
   }

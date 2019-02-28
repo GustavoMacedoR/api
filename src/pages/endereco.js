@@ -14,8 +14,12 @@ import {
   Separator,
   Button,
   Icon,
-  View, Form,
-  Textarea,Item,Label,Input
+  View,
+  Form,
+  Textarea,
+  Item,
+  Label,
+  Input
 } from 'native-base'
 import { styles, colors } from '../styles'
 import { addEndereco } from '../actions'
@@ -25,19 +29,18 @@ class endereco extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      bairro: '',
+      bairro_id: '',
       rua: '',
       numero: '',
-      complemento:''
+      complemento: ''
     }
   }
 
-  cadastrar  = () => {
+  cadastrar = () => {
     const _id = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000
-    addEndereco({...this.state,_id})
-    this.props.navigation.replace("contato")
- 
- }
+    addEndereco({ ...this.state, _id })
+    this.props.navigation.replace('contato')
+  }
 
   render () {
     return (
@@ -62,46 +65,50 @@ class endereco extends Component {
             <Text style={styles.titulo}>Endereço de Entrega</Text>
             <Text style={styles.subtitulo} />
           </View>
-          <Separator/>
+          <Separator />
           <Form>
-          <Item stackedLabel>
-            <Label>Bairro</Label>
-            <Input
-              value={this.state.bairro}
-              onChangeText={e => {
-                this.setState({ bairro: e })
+            <ListItem
+              onPress={() => {
+                this.props.navigation.navigate('nome')
               }}
-            />
-          </Item>
-          <Item stackedLabel>
-            <Label>Rua/Av</Label>
-            <Input
-              value={this.state.rua}
-              onChangeText={e => {
-                this.setState({ rua: e })
-              }}
-            />
-          </Item>
-          <Item stackedLabel>
-            <Label>Número</Label>
-            <Input
-              value={this.state.numero}
-              onChangeText={e => {
-                this.setState({ numero: e })
-              }}
-            />
-          </Item>
-          <Item stackedLabel>
-            <Label>Complemento</Label>
-            <Input
-            multiline = {true}
-            numberOfLines = {4}
-              value={this.state.complemento}
-              onChangeText={e => {
-                this.setState({ complemento: e })
-              }}
-            />
-          </Item>
+            >
+              <Body>
+                <Text note>Bairro</Text>
+                <Text>{this.props.store.cliente.nome}</Text>
+              </Body>
+              <Right>
+                <Icon name='arrow-forward' />
+              </Right>
+            </ListItem>
+            <Item stackedLabel>
+              <Label>Rua/Av</Label>
+              <Input
+                value={this.state.rua}
+                onChangeText={e => {
+                  this.setState({ rua: e })
+                }}
+              />
+            </Item>
+            <Item stackedLabel>
+              <Label>Número</Label>
+              <Input
+                value={this.state.numero}
+                onChangeText={e => {
+                  this.setState({ numero: e })
+                }}
+              />
+            </Item>
+            <Item stackedLabel>
+              <Label>Complemento</Label>
+              <Input
+                multiline
+                numberOfLines={4}
+                value={this.state.complemento}
+                onChangeText={e => {
+                  this.setState({ complemento: e })
+                }}
+              />
+            </Item>
           </Form>
         </Content>
       </Container>

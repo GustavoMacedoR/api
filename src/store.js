@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { AsyncStorage } from 'react-native'
+
 loja = (state = {}, action) => {
   var novo = {}
   switch (action.type) {
@@ -32,6 +33,19 @@ categoria = (state = {}, action) => {
   }
 }
 
+bairro = (state = {}, action) => {
+  var novo = {}
+  switch (action.type) {
+    case 'SET_BAIRRO_LIST':
+    action.itens.map(item => {
+      novo[item._id] = item
+    })
+      return novo
+    default:
+      return state
+  }
+}
+
 endereco = (state = [], action) => {
   var novo = []
   switch (action.type) {
@@ -51,6 +65,30 @@ cliente = (state = {}, action) => {
     case 'CARREGA_CLIENTE':
       return action.item
     case 'CLEAR_CLIENTE':
+      return novo
+    default:
+      return state
+  }
+}
+
+pedidos = (state = [], action) => {
+  var novo = {}
+  switch (action.type) {
+    case 'CARREGA_PEDIDOS':
+      return action.item
+    case 'CLEAR_PEDIDOS':
+      return novo
+    default:
+      return state
+  }
+}
+
+feed = (state = [], action) => {
+  var novo = {}
+  switch (action.type) {
+    case 'CARREGA_FEED':
+      return action.item
+    case 'CLEAR_FEED':
       return novo
     default:
       return state
@@ -89,7 +127,7 @@ pedido = (state = { loja: {}, lista: [] }, action) => {
     case 'ADD_TIPO_PAGAMENTO':
       novo = { ...state }
       novo.tipopagamento = action.item
-      return novo 
+      return novo
     case 'ADD_OBSERVACAO':
       novo = { ...state }
       novo.observacao = action.item
@@ -103,5 +141,14 @@ pedido = (state = { loja: {}, lista: [] }, action) => {
   }
 }
 
-const rootReducer = combineReducers({ loja, categoria, pedido, endereco,cliente })
+const rootReducer = combineReducers({
+  loja,
+  categoria,
+  pedido,
+  endereco,
+  cliente,
+  pedidos,
+  feed,
+  bairro
+})
 export default rootReducer

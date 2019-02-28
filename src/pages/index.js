@@ -7,13 +7,14 @@ import pedido from './pedido'
 import cadastro from './cadastro'
 import endereco from './endereco'
 import enderecos from './enderecos'
-import contato from './contato'
+import nome from './nome'
 import pagamento from './pagamento'
 import tipopagamento from './tipopagamento'
 import perfil from './perfil'
 import numero from './numero'
 import codigo from './codigo'
-
+import pedidos from './pedidos'
+import feed from './feed'
 export {
   adicionais,
   atributos,
@@ -24,9 +25,12 @@ export {
   cadastro,
   endereco,
   enderecos,
-  contato,
+  nome,
   pagamento,
   tipopagamento,
   perfil,
-  numero,codigo
+  numero,
+  codigo,
+  pedidos,
+  feed
 }

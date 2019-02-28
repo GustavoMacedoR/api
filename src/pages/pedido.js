@@ -20,9 +20,8 @@ import {
 } from 'native-base'
 import { styles, colors } from '../styles'
 import { connect } from 'react-redux'
-import { removeProduto,addBusca } from '../actions'
+import { removeProduto, addBusca } from '../actions'
 import { NavigationActions } from 'react-navigation'
-
 
 class pedido extends Component {
   constructor (props) {
@@ -44,8 +43,8 @@ class pedido extends Component {
   }
 
   buscarNoRestaurante = () => {
-      addBusca()
-      this.props.navigation.navigate('contato')
+    addBusca()
+    this.props.navigation.navigate('contato')
   }
 
   render () {
@@ -155,18 +154,20 @@ class pedido extends Component {
           <Button info block large onPress={() => this.voltarCardapio()}>
             <Text>Adicionar mais produtos</Text>
           </Button>
-          <View style={{height:10}}/>
+          <View style={{ height: 10 }} />
           <Button info block success large onPress={() => this.receberEmCasa()}>
             <Text>Receber em casa</Text>
           </Button>
-          <View style={{height:10}}/>
-          <Button info block warning large onPress={() => this.buscarNoRestaurante()}>
+          <View style={{ height: 10 }} />
+          <Button
+            info
+            block
+            warning
+            large
+            onPress={() => this.buscarNoRestaurante()}
+          >
             <Text>Buscar no Restaurante</Text>
           </Button>
-
-          
-
-          
         </Content>
       </Container>
     )

@@ -23,7 +23,7 @@ import {
   Input
 } from 'native-base'
 import { styles, colors, fonts } from '../styles'
-import {  carregaCliente } from '../actions'
+import {  carregaCliente, setCliente } from '../actions'
 import { connect } from 'react-redux'
 import Separador from '../components/separador'
 import axios from '../axios'
@@ -52,8 +52,9 @@ class codigo extends Component {
       try {
         const res = await axios.post('cliente/authenticate', this.state)
         console.log(res.data)
-        await carregaCliente(res.data)
-        this.props.navigation.dismiss()
+        await setCliente(res.data)
+        this.props.navigation.navigate('nome')
+       
       } catch (error) {
         alert('Código Iválido')
       }
@@ -70,7 +71,7 @@ class codigo extends Component {
             </Button>
           </Left>
           <Body>
-            <Title>Código</Title>
+            <Title>Login</Title>
           </Body>
           <Right />
         </Header>
