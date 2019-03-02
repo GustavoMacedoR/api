@@ -61,7 +61,7 @@ class lojas extends Component {
     Object.keys(this.props.store.loja).map(key => {
       const item = this.props.store.loja[key]
       item.peso = 0
-      if (item._id == this.props.store.pedido.loja._id) {
+      if (item.id == this.props.store.pedido.loja.id) {
         lojas.unshift(item)
         item.peso = 10
       } else {
@@ -114,14 +114,14 @@ class lojas extends Component {
           <Separator/>
           <List>
             {lojas.map(item => (
-              <ListItem onPress={() => this.selectLoja(item)} key={item._id}>
+              <ListItem onPress={() => this.selectLoja(item)} key={item.id}>
                 <Body>
                   
                   <Text >{item.nome}</Text>
                   <Text note>{item.legenda}</Text>
                 </Body>
                 <Right>
-                  {item._id == this.props.store.pedido.loja._id ? (
+                  {item.id == this.props.store.pedido.loja.id ? (
                     <Button
                       danger
                       rounded

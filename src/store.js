@@ -6,13 +6,13 @@ loja = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_LOJA':
       novo = { ...state }
-      novo[action.item._id] = action.item
+      novo[action.item.id] = action.item
       return novo
     case 'SET_LOJA':
       return action.item
     case 'SET_LOJA_LIST':
       action.itens.map(item => {
-        novo[item._id] = item
+        novo[item.id] = item
       })
       return novo
     case 'CLEAR_LOJA':
@@ -26,7 +26,7 @@ categoria = (state = {}, action) => {
   switch (action.type) {
     case 'SET_CATEGORIA':
       novo = { ...state }
-      novo[action._id] = action.categoria.produtos
+      novo[action.id] = action.categoria.categorias
       return novo
     default:
       return state
@@ -38,7 +38,7 @@ bairro = (state = {}, action) => {
   switch (action.type) {
     case 'SET_BAIRRO_LIST':
     action.itens.map(item => {
-      novo[item._id] = item
+      novo[item.id] = item
     })
       return novo
     default:
@@ -101,7 +101,7 @@ pedido = (state = { loja: {}, lista: [] }, action) => {
   switch (type) {
     case 'ADD_PRODUTO':
       novo = { ...state }
-      if (state.loja._id != item.loja._id) {
+      if (state.loja.id != item.loja.id) {
         novo.loja = item.loja
         novo.lista = []
       }

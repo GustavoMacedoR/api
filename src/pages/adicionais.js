@@ -23,11 +23,12 @@ class adicionais extends Component {
     super(props)
 
     const novo = {}
+    console.log(props.navigation.state.params)
     props.navigation.state.params.opcoes.map(grupo =>
       grupo.itens.map(
         adicional =>
-          (novo[adicional._id] = {
-            _id: adicional._id,
+          (novo[adicional.id] = {
+            id: adicional.id,
             quantidade: 0,
             nome: adicional.nome,
             valor: adicional.valor
@@ -40,8 +41,8 @@ class adicionais extends Component {
 
     props.navigation.state.params.atual.map(item => {
      
-      if (novo[item._id]){
-       novo[item._id].quantidade = item.quantidade
+      if (novo[item.id]){
+       novo[item.id].quantidade = item.quantidade
        
       }
     })
@@ -52,9 +53,9 @@ class adicionais extends Component {
     }
   }
 
-  setQuantidade = (_id, qtd) => {
+  setQuantidade = (id, qtd) => {
     const novo = JSON.parse(JSON.stringify(this.state.adicionais))
-    novo[_id].quantidade = qtd
+    novo[id].quantidade = qtd
     this.setState({ adicionais: novo })
   }
 
@@ -80,7 +81,7 @@ class adicionais extends Component {
           </View>
           <List>
             {opcoes.map(grupo => (
-              <View key={grupo._id}>
+              <View key={grupo.id}>
                 <Separator bordered>
                   <Text>{grupo.nome}</Text>
                 </Separator>
@@ -88,11 +89,11 @@ class adicionais extends Component {
                   <MkNumberPicker
                     key={index}
                     onChange={e => {
-                      this.setQuantidade(adicional._id, e)
+                      this.setQuantidade(adicional.id, e)
                     }}
                     titulo={adicional.nome + ' - R$ '+adicional.valor}
                     
-                    inicial={this.state.adicionais[adicional._id].quantidade}
+                    inicial={this.state.adicionais[adicional.id].quantidade}
                     min='0'
                     max='10'
                   />

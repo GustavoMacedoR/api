@@ -23,7 +23,7 @@ class bairros extends Component {
       onSelect,
       atual,
       atributo,
-      atributo: { _id, atributos }
+      atributo: { id, atributos }
     } = this.props.navigation.state.params
     const { navigation } = this.props
 
@@ -47,21 +47,21 @@ class bairros extends Component {
 
           <List>
             {atributo.grupos.map(grupo => (
-              <View key={grupo._id}>
+              <View key={grupo.id}>
                 <Separator bordered>
                   <Text>{grupo.nome}</Text>
                 </Separator>
                 {grupo.itens.map(item => (
                   <ListItem
                     icon
-                    key={item._id}
+                    key={item.id}
                     onPress={() => {
-                      onSelect(atributo._id, item)
+                      onSelect(atributo.id, item)
                       navigation.goBack()
                     }}
                   >
                     <Left>
-                      <Button transparent light={item._id != atual}>
+                      <Button transparent light={item.id != atual}>
                         <Icon name='ios-checkmark-circle' />
                       </Button>
                     </Left>

@@ -4,18 +4,18 @@ import { AsyncStorage } from 'react-native'
 
 export const atualizaLoja = async () => {
   const res = await axios.get('loja')
-  store.dispatch({ type: 'SET_LOJA_LIST', itens: res.data })
-  console.log('atualizaLoja')
+  store.dispatch({ type: 'SET_LOJA_LIST', itens: res.data },console.log(res.data))
+  
 }
 export const atualizaBairro = async () => {
   const res = await axios.get('bairros')
   store.dispatch({ type: 'SET_BAIRRO_LIST', itens: res.data })
 }
 
-export const atualizaProduto = async _id => {
-  const res = await axios.get('loja/produtos/' + _id)
-  store.dispatch({ type: 'SET_CATEGORIA', _id, categoria: res.data })
-  console.log('atualizaProduto', _id)
+export const atualizaProduto = async id => {
+  const res = await axios.get('loja/' + id + '/')
+  store.dispatch({ type: 'SET_CATEGORIA', id, categoria: res.data })
+  console.log('atualizaProduto', res.data)
 }
 
 export const addProduto = async item => {

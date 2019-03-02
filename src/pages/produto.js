@@ -24,8 +24,8 @@ class produto extends Component {
   constructor (props) {
     super(props)
     const novo = {}
-    props.navigation.state.params.produto.atributos.map(
-      item => (novo[item._id] = { id: item._id, nome: '' })
+    props.navigation.state.params.produto.produto_atributos.map(
+      item => (novo[item.id] = { id: item.id, nome: '' })
     )
 
     this.state = {
@@ -42,8 +42,8 @@ class produto extends Component {
   calculaTotal () {
     const produto = this.props.navigation.state.params.produto
     var valor = parseFloat(produto.valor)
-    produto.atributos.map(atributo => {
-      if (this.state.atributos[atributo._id].valorf) { valor += parseFloat(this.state.atributos[atributo._id].valorf) }
+    produto.produto_atributos.map(atributo => {
+      if (this.state.atributos[atributo.id].valorf) { valor += parseFloat(this.state.atributos[atributo.id].valorf) }
     })
     this.state.adicionais.map(adicional => {
       valor += parseFloat(adicional.valorf)
@@ -54,10 +54,12 @@ class produto extends Component {
     this.setState({ valor })
   }
 
-  setAtributo = async (atributo_id, obj) => {
-    const novo = this.state.atributos
-    novo[atributo_id] = { ...obj, valorf: parseFloat(obj.valor).toFixed(2) }
+  setAtributo = async (atributoid, obj) => {
+    console.log("obj",obj)
+    const novo = JSON.parse(JSON.stringify(this.state.atributos))
+    novo[atributoid] = { ...obj, valorf: parseFloat(obj.valor).toFixed(2) }
     atributos = novo
+    console.log(novo)
     await this.setState({
       atributos: atributos
     })
@@ -69,8 +71,8 @@ class produto extends Component {
     const produto = this.props.navigation.state.params.produto
     const loja = this.props.navigation.state.params.loja
     const erros = []
-    produto.atributos.map( item => {
-      if (!this.state.atributos[item._id]._id){
+    produto.produto_atributos.map( item => {
+      if (!this.state.atributos[item.id].id){
         erros.push("Selecione o "+item.nome)
       }
     })
@@ -79,6 +81,9 @@ class produto extends Component {
       alert(erros[0])
     }else{
       const produto_opc = { ...this.state }
+      console.log("produto",produto)
+      console.log("loja",loja)
+      console.log("produtoPC",produto_opc)
     addProduto({ loja, produto, produto_opc })
     
     this.props.navigation.navigate('pedido')
@@ -88,9 +93,9 @@ class produto extends Component {
 
   setAdicionais = async obj => {
     let novo = []
-    Object.keys(obj).forEach(_id => {
-      if (obj[_id].quantidade > 0) {
-        let adc = obj[_id]
+    Object.keys(obj).forEach(id => {
+      if (obj[id].quantidade > 0) {
+        let adc = obj[id]
         adc = {
           ...adc,
           valorf: (parseFloat(adc.valor) * adc.quantidade).toFixed(2)
@@ -107,7 +112,7 @@ class produto extends Component {
   gotoAtributos = atributo => {
     this.props.navigation.navigate('atributos', {
       atributo: atributo,
-      atual: this.state.atributos[atributo._id]._id,
+      atual: this.state.atributos[atributo.id].id,
       onSelect: this.setAtributo
     })
   }
@@ -121,6 +126,7 @@ class produto extends Component {
 
   render () {
     const produto = this.props.navigation.state.params.produto
+    console.log(produto)
     return (
       <Container>
         <Header>
@@ -141,26 +147,24 @@ class produto extends Component {
             </Text>
             <Text style={styles.subtitulo}>{produto.legenda}</Text>
           </View>
-          {produto.atributos.length == 0 ? null : (
+          {produto.produto_atributos.length == 0 ? null : (
             <List>
               <Separator bordered>
                 <Text>Atributos</Text>
               </Separator>
-              {produto.atributos.map((item, index) => (
+              {produto.produto_atributos.map((item, index) => (
                 <ListItem
                   onPress={() => this.gotoAtributos(item)}
-                  key={item._id}
+                  key={index}
                 >
                   <Body>
                     <Text>{item.nome}</Text>
-                    {!this.state.atributos[item._id]._id ? (
+                    {!this.state.atributos[item.id].id ? (
                       <Text style={{color:colors.danger}}>Selecione</Text>
                     ) : (
                       <Text note>
-                        {this.state.atributos[item._id].nome}{' '}
-                        {this.state.atributos[item._id].valor == 0
-                          ? null
-                          : ' - R$ ' + this.state.atributos[item._id].valorf}
+                        {this.state.atributos[item.id].nome}{' '}
+                        {this.state.atributos[item.id].valor == undefined ? "" : ' - R$ ' + this.state.atributos[item.id].valorf}
                       </Text>
                     )}
                   </Body>
@@ -179,7 +183,7 @@ class produto extends Component {
               <Body>
                 <Text>Escolha os adicionais (opcional)</Text>
                 {this.state.adicionais.map(adicional => (
-                  <Text note key={adicional._id}>
+                  <Text note key={adicional.id}>
                     {adicional.quantidade} | {adicional.nome} - R${' '}
                     {adicional.valorf}
                   </Text>

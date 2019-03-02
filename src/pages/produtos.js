@@ -32,7 +32,7 @@ class produtos extends Component {
   }
 
   async componentDidMount () {
-    atualizaProduto(this.state.loja._id)
+    atualizaProduto(this.state.loja.id)
     // this.props.navigation.navigate("produto", { produto: this.state.categorias[0].produtos[0] });
   }
 
@@ -44,7 +44,6 @@ class produtos extends Component {
   }
 
   render () {
-    const { navigation } = this.props
     const loja = this.props.navigation.state.params.loja
     return (
       <Container>
@@ -70,23 +69,23 @@ class produtos extends Component {
             <Text style={styles.subtitulo}>{this.state.loja.legenda}</Text>
           </View>
           <List>
-            {!this.props.store.categoria[this.state.loja._id]
+            {!this.props.store.categoria[this.state.loja.id]
               ? null
-              : this.props.store.categoria[this.state.loja._id].map(
-                (categoria, categoria_index) => (
-                  <View key={categoria._id}>
+              : this.props.store.categoria[this.state.loja.id].map(
+                (categoria, index) => (
+                  <View key={index}>
                     <Separator bordered>
                       <Text>{categoria.nome}</Text>
                     </Separator>
-                    {categoria.produtos.map((produto, produto_index) => {                
+                    {categoria.produtos.map((produto, index) => {                
                       var count = 0
                       this.props.store.pedido.lista.map(lista=>{
-                        if (produto._id == lista.produto._id)
+                        if (produto.id == lista.produto.id)
                           count += parseInt(lista.produto_opc.quantidade)
                       }) 
                       return (
                       <ListItem
-                        key={produto._id}
+                        key={index}
                         onPress={() => this.goProduto(produto)}
                       >
                         <Body>
@@ -111,7 +110,7 @@ class produtos extends Component {
               )}
           </List>
         </Content>
-        {loja._id != this.props.store.pedido.loja._id ? null : (
+        {loja.id != this.props.store.pedido.loja.id ? null : (
           <Fab
             style={{ backgroundColor: colors.danger }}
             position='bottomRight'

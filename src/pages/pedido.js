@@ -35,11 +35,7 @@ class pedido extends Component {
   }
 
   receberEmCasa = () => {
-    if (this.props.store.endereco.length > 0) {
-      this.props.navigation.navigate('enderecos')
-    } else {
-      this.props.navigation.navigate('endereco')
-    }
+
   }
 
   buscarNoRestaurante = () => {
@@ -53,6 +49,7 @@ class pedido extends Component {
       total += parseFloat(item.produto_opc.valor)
     })
     total = total.toFixed(2)
+    console.log(this.props.store.pedido.loja)
 
     return (
       <Container>
@@ -118,21 +115,21 @@ class pedido extends Component {
                     {item.produto_opc.quantidade} | {item.produto.nome} - R${' '}
                     {item.produto_opc.valor}
                   </Text>
-                  {item.produto.atributos.map(atributo => (
-                    <Text note key={atributo._id}>
+                  {item.produto.produto_atributos.map(atributo => (
+                    <Text note key={atributo.id}>
                       {atributo.nome}:{' '}
-                      {item.produto_opc.atributos[atributo._id].nome}
-                      {item.produto_opc.atributos[atributo._id].valorf == 0
+                      {item.produto_opc.atributos[atributo.id].nome}
+                      {item.produto_opc.atributos[atributo.id].valorf == 0
                         ? null
                         : ' - R$ ' +
-                          item.produto_opc.atributos[atributo._id].valorf}{' '}
+                          item.produto_opc.atributos[atributo.id].valorf}{' '}
                     </Text>
                   ))}
                   {item.produto_opc.adicionais.length > 0 ? (
                     <Text note>Adicionais:</Text>
                   ) : null}
                   {item.produto_opc.adicionais.map(adicional => (
-                    <Text note key={adicional._id}>
+                    <Text note key={adicional.id}>
                       {adicional.quantidade} | {adicional.nome} - R${' '}
                       {adicional.valorf}
                     </Text>

@@ -8,8 +8,6 @@ import {
   atributos,
   adicionais,
   pedido,
-  endereco,
-  enderecos,
   cadastro,
   nome,
   pagamento,
@@ -31,8 +29,6 @@ const stack = createStackNavigator(
     atributos,
     adicionais,
     pedido,
-    endereco,
-    enderecos,
     pagamento,
     tipopagamento
   },

@@ -5,8 +5,6 @@ import produto from './produto'
 import produtos from './produtos'
 import pedido from './pedido'
 import cadastro from './cadastro'
-import endereco from './endereco'
-import enderecos from './enderecos'
 import nome from './nome'
 import pagamento from './pagamento'
 import tipopagamento from './tipopagamento'
@@ -23,8 +21,6 @@ export {
   produtos,
   pedido,
   cadastro,
-  endereco,
-  enderecos,
   nome,
   pagamento,
   tipopagamento,
