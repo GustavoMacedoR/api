@@ -13,10 +13,12 @@ import numero from './numero'
 import codigo from './codigo'
 import pedidos from './pedidos'
 import feed from './feed'
+import enderecos from './enderecos'
 export {
   adicionais,
   atributos,
   lojas,
+  enderecos,
   produto,
   produtos,
   pedido,

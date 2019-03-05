@@ -16,7 +16,11 @@ var styles = StyleSheet.create({
     subtitulo:{
         color:colors.regular,
         fontSize: fonts.regular,
-    }
+    },
+    subtituloSimple:{
+      color:colors.info,
+      fontSize: fonts.big,
+  }
     
   });
 

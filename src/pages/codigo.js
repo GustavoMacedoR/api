@@ -33,10 +33,10 @@ class codigo extends Component {
   constructor (props) {
     super(props)
     const telefone = props.navigation.getParam("telefone")
-    const telefonef = props.navigation.getParam("telefonef")
+    telefonef = props.navigation.getParam("telefonef")
+    console.log(telefone)
     this.state = {
       telefone,
-      telefonef,
       codigo: ''
     }
   }
@@ -50,10 +50,12 @@ class codigo extends Component {
       alert('Digite o código com 6 digitos!')
     } else {
       try {
-        const res = await axios.post('cliente/authenticate', this.state)
-        console.log(res.data)
-        await setCliente(res.data)
-        this.props.navigation.navigate('nome')
+        let Body = {username:this.state.telefone,password:this.state.codigo}
+        const res = await axios.post('/auth/codigocheck/', Body)
+        console.log("resdata",res.data.cliente)
+        await setCliente(res.data.cliente)
+        await AsyncStorage.setItem('token', res.data.token)
+        this.props.navigation.navigate('cadastro')
        
       } catch (error) {
         alert('Código Iválido')
@@ -78,7 +80,7 @@ class codigo extends Component {
         <Content>
           <View style={styles.container}>
             <Text style={styles.titulo}>Verifique seu número</Text>
-            <Text style={styles.titulo}>{this.state.telefonef}</Text>
+            <Text style={styles.titulo}>{telefonef}</Text>
             <Text style={styles.subtitulo}>
               O Calangoo enviou um SMS para verificar seu número de telefone,
               insira seu código com 6 digitos.

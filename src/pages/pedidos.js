@@ -18,15 +18,26 @@ import {
   Item,
   Input
 } from 'native-base'
-import { atualizaLoja, carregaPedido,carregaEndereco,carregaCliente } from '../actions'
 import { connect } from 'react-redux'
 import { YellowBox } from 'react-native'
 import { AsyncStorage } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { styles, colors } from '../styles'
+import { carregaEndereco } from '../actions'
 YellowBox.ignoreWarnings(['Warning: ...'])
 console.disableYellowBox = true
 class pedidos extends Component {
+
+  state = {
+    produto: null
+  }
+
+  async componentDidMount(){
+    const value = await AsyncStorage.getItem('pedido');
+    this.setState({produto: JSON.parse(value)})
+    console.log("aaaa",this.state)
+  }
+
   render () {
 
     return (

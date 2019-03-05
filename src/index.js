@@ -7,6 +7,7 @@ import {
   produtos,
   atributos,
   adicionais,
+  enderecos,
   pedido,
   cadastro,
   nome,
@@ -39,7 +40,8 @@ const login = createStackNavigator(
   {
     numero,
     codigo,
-    nome
+    nome,
+    enderecos
   },
 
   { mode: 'modal', headerMode: 'none' }

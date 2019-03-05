@@ -56,7 +56,7 @@ class atributos extends Component {
                     icon
                     key={item.id}
                     onPress={() => {
-                      onSelect(grupo.id, item)
+                      onSelect(atributo.id, item)
                       navigation.goBack()
                     }}
                   >

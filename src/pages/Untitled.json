@@ -1,0 +1,41 @@
+{
+    "loja": 4,
+    "pedido": {
+        "valor": 61,
+        "observacao": "nova observação",
+        "itempedido": [
+            {
+                "produto": 26,
+                "observacao": "",
+                "atributos": {
+                    "13": 16
+                },
+                "adicionais": [
+                    {
+                        "quantidade": 1,
+                        "adicional": 23
+                    }
+                ]
+            },
+            {
+                "produto": 26,
+                "observacao": "",
+                "atributos": {
+                    "13": 17
+                },
+                "adicionais": []
+            }
+        ]
+    },
+    "endereco": {
+        "id": 12,
+        "cep": "88882222",
+        "endereco": "rua da loucura",
+        "numero": "122",
+        "complemento": "proximo a casa de maria",
+        "bairro": "Nova Imperatriz",
+        "cidade": "Imperatriz",
+        "uf": "MA",
+        "cliente": 7
+    }
+}

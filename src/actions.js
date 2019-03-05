@@ -56,7 +56,7 @@ export const addEndereco = async item => {
   await store.dispatch({ type: 'ADD_ENDERECO', item })
   await AsyncStorage.setItem(
     'endereco',
-    JSON.stringify(store.getState().endereco)
+    JSON.stringify(store.getState().endereco) 
   )
   addEnderecoPedido(item)
 }
@@ -79,7 +79,7 @@ export const carregaCliente = async item => {
 
 export const setCliente = async item => {
   store.dispatch({ type: 'CARREGA_CLIENTE', item })
-  await AsyncStorage.setItem('cliente', JSON.stringify(store.getState().cliente))
+  await AsyncStorage.setItem('cliente', JSON.stringify(store.getState().cliente)) 
 }
 
 

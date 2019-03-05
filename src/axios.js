@@ -1,4 +1,5 @@
 import axios from "axios"
+import { AsyncStorage } from 'react-native'
 
 const api = axios.create({
   baseURL: 'http://192.168.0.104:2001/api',
@@ -8,17 +9,18 @@ const api = axios.create({
   },
 })
 
-// api.interceptors.request.use(function (config) {
-//   const token = localStorage.getItem('access_token');
+api.interceptors.request.use(async (config) => {
+  const token = await AsyncStorage.getItem('token')
+  console.log("aaa",token)
 
-//   if ( token != null ) {
-//     config.headers.Authorization = `Bearer ${token}`;
-//   }
+  if ( token != null ) {
+    config.headers.Authorization = `Token ${token}`;
+  }
 
-//   return config;
-// }, function (error) {
-//   return Promise.reject(error);
-// });
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
 
 // api.interceptors.response.use(function (response) {
 //   return response;

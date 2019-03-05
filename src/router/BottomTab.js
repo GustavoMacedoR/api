@@ -8,7 +8,6 @@ import { lojas, feed, perfil,pedidos } from '../pages'
 export default createBottomTabNavigator(
   {
     lojas,
-    feed,
     pedidos,
     perfil
   },
@@ -20,47 +19,43 @@ export default createBottomTabNavigator(
           <FooterTab>
             <Button
               vertical
-              transparent={props.navigation.state.index === 0}
+              bordered={props.navigation.state.index === 0}
+              light={props.navigation.state.index === 0}
               onPress={() => props.navigation.navigate('lojas')}
             >
               <Icon
                 name='ios-home'
-                active={props.navigation.state.index === 0}
+                style={{color:'white'}}
+
+                //active={props.navigation.state.index === 0} 
               />
-              <Text style={{ fontSize: fonts.smaller }}>Restaurantes</Text>
+              <Text style={{ fontSize: fonts.small, fontWeight:'bold', color:'white' }}>Restaurantes</Text> 
             </Button>
             <Button
               vertical
-              transparent={props.navigation.state.index === 1}
-              onPress={() => props.navigation.navigate('feed')}
-            >
-              <Icon
-                name='logo-rss'
-                active={props.navigation.state.index === 1}
-              />
-              <Text style={{ fontSize: fonts.smaller }}>Feed</Text>
-            </Button>
-            <Button
-              vertical
-              transparent={props.navigation.state.index === 2}
+              bordered={props.navigation.state.index === 1}
+              light={props.navigation.state.index === 1}
               onPress={() => props.navigation.navigate('pedidos')}
             >
               <Icon
                 name='ios-cart'
-                active={props.navigation.state.index === 2}
+                style={{color:'white'}}
+                //active={props.navigation.state.index === 1}
               />
-              <Text style={{ fontSize: fonts.smaller }}>Pedidos</Text>
+              <Text style={{ fontSize: fonts.small, fontWeight:'bold', color:'white' }}>Pedidos</Text>
             </Button>
             <Button
               vertical
-              transparent={props.navigation.state.index === 3}
+              bordered={props.navigation.state.index === 2}
+              light={props.navigation.state.index === 2}
               onPress={() => props.navigation.navigate('perfil')}
             >
               <Icon
-                name='ios-person'
-                active={props.navigation.state.index === 3}
+                name='ios-gift'
+                style={{color:'white'}}
+                //active={props.navigation.state.index === 2}
               />
-              <Text style={{ fontSize: fonts.smaller }}>Conta</Text>
+              <Text style={{ fontSize: fonts.small, fontWeight:'bold', color:'white' }}>Promoções</Text>
             </Button>
           </FooterTab>
         </Footer>

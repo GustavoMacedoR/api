@@ -42,6 +42,11 @@ class numero extends Component {
       segundosf: '',
       interval: null
     }
+
+    this.user = {
+      username:'',
+      usernamef:''
+    }
   }
 
   componentWillUnmount(){
@@ -49,7 +54,7 @@ class numero extends Component {
   }
 
   setTelefone = (e, ef) => {
-    this.setState({ telefone: e, telefonef: ef })
+    this.setState(this.user = { username: e, usernamef: ef })
   }
 
   regressivo = () => {
@@ -63,34 +68,21 @@ class numero extends Component {
   }
 
   cadastrar = async () => {
-    if (this.state.telefone.length != 11) {
+    console.log(this.user.username.length)
+    if (this.user.username.length != 11) {
       alert('Digite o seu número com DDD!')
     } else {
+      let Body = {username:this.user.username}
       Alert.alert(
         'Confirmação de número',
-        'O número \n ' + this.state.telefonef + ' \n está correto?',
+        'O número \n ' + this.user.usernamef + ' \n está correto?',
         [
           {
             text: 'Sim',
             onPress: async () => {
               try {
-                const res = await axios.post('cliente/login', this.state)
-                const segundos = parseInt(res.data.response.segundos)
-                await this.setState({ segundos })
-                clearInterval(this.state.interval)
-                this.setState({ interval: setInterval(this.regressivo, 1000) })
-                await this.setState({
-                  send_telefone: this.state.telefone,
-                  send_telefonef: this.state.telefonef
-                })
-
-                if (segundos == 60 * 60) {
-                  this.props.navigation.navigate('codigo', {
-                    telefone: this.state.send_telefone,
-                    telefonef: this.state.send_telefonef
-                  })
-                }
-                console.log(segundos)
+                await axios.post('/auth/telefonecheck/', Body)
+                this.props.navigation.navigate('codigo',{telefone:this.user.username, telefonef:this.user.usernamef})
               } catch (error) {
                 console.log(error)
                 alert('Não foi possível enviar o SMS.')
@@ -146,7 +138,7 @@ class numero extends Component {
                 }}
                 keyboardType='phone-pad'
                 textAlign={'center'}
-                value={this.state.telefone}
+                value={this.user.username}
                 placeholder='Seu número'
                 onChangeText={(formatted, extracted) => {
                   this.setTelefone(extracted, formatted)

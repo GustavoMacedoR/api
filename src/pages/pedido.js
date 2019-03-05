@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, TouchableOpacity, Alert } from 'react-native'
+import { Image, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
 import {
   Container,
   Header,
@@ -20,11 +20,13 @@ import {
 } from 'native-base'
 import { styles, colors } from '../styles'
 import { connect } from 'react-redux'
-import { removeProduto, addBusca } from '../actions'
+import { removeProduto, addBusca, carregaCliente } from '../actions'
 import { NavigationActions } from 'react-navigation'
+import axios from "../axios";
+import { enderecos } from '.';
 
 class pedido extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     console.log(this.props.store.pedido)
   }
@@ -34,7 +36,74 @@ class pedido extends Component {
     })
   }
 
-  receberEmCasa = () => {
+  calcValortotal = () => {
+    var total = 0
+    this.props.store.pedido.lista.map((item, index) => {
+      total += parseFloat(item.produto_opc.valor)
+    })
+    return total
+  }
+
+  makeJsonPedido = async () => {
+    var value = this.props.store.pedido
+
+    var Body = {
+      loja: value.loja.id,
+      pedido: {
+        valor: this.calcValortotal(),
+        observacao: "nova observação",
+        itempedido:
+          value.lista.map(item => {
+            return {
+              produto: item.produto.id,
+              observacao: item.produto_opc.observacoes,
+              atributos:
+                Object.keys(item.produto_opc.atributos).map(keys => {
+                  return {
+                    [keys]: item.produto_opc.atributos[keys].id
+                  }
+                }),
+              adicionais:
+                item.produto_opc.adicionais.map(adicionais => {
+                  return {
+                    quantidade: adicionais.quantidade,
+                    adicional: adicionais.id
+                  }
+                })
+            }
+          })
+      },
+      endereco: this.props.store.cliente.enderecos[0]
+    }
+
+    var result = {}
+
+    Body.pedido.itempedido.map( item =>{
+      item.atributos.map(atributos => {
+        result = {...result,...atributos}
+      })
+      item.atributos = result
+    })
+    console.log(JSON.stringify(Body))
+    return Body
+
+  }
+
+
+  receberEmCasa = async () => {
+    const value = await AsyncStorage.getItem('token');
+    var Body =  await this.makeJsonPedido()
+    if (value == null) {
+      this.props.navigation.navigate('login')
+    } else {    
+      try{
+        const res = await axios.post('/pedido', Body)
+        console.log(res.data)
+      }catch(error){
+        console.log(error.response.data)
+      }
+      this.props.navigation.navigate('pedidos')
+    }
 
   }
 
@@ -43,7 +112,7 @@ class pedido extends Component {
     this.props.navigation.navigate('contato')
   }
 
-  render () {
+  render() {
     var total = 0
     this.props.store.pedido.lista.map((item, index) => {
       total += parseFloat(item.produto_opc.valor)
@@ -101,7 +170,7 @@ class pedido extends Component {
                               }
                             }
                           },
-                          { text: 'Não', onPress: () => {} }
+                          { text: 'Não', onPress: () => { } }
                         ],
                         { cancelable: false }
                       )
@@ -122,7 +191,7 @@ class pedido extends Component {
                       {item.produto_opc.atributos[atributo.id].valorf == 0
                         ? null
                         : ' - R$ ' +
-                          item.produto_opc.atributos[atributo.id].valorf}{' '}
+                        item.produto_opc.atributos[atributo.id].valorf}{' '}
                     </Text>
                   ))}
                   {item.produto_opc.adicionais.length > 0 ? (
