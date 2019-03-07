@@ -14,7 +14,8 @@ import {
   pagamento,
   tipopagamento,
   numero,
-  codigo
+  codigo,
+  informacoespedido
 } from './pages'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
@@ -31,11 +32,19 @@ const stack = createStackNavigator(
     adicionais,
     pedido,
     pagamento,
-    tipopagamento
+    tipopagamento,
   },
 
   { mode: 'modal', headerMode: 'none' }
 )
+
+const info = createStackNavigator(
+  {
+    informacoespedido
+  },
+  { mode: 'modal', headerMode: 'none' }
+)
+
 const login = createStackNavigator(
   {
     numero,
@@ -50,7 +59,8 @@ const RootNav = createStackNavigator(
   {
     tab,
     stack,
-    login
+    login,
+    info
   },
   { mode: 'modal', headerMode: 'none' }
 )

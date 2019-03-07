@@ -108,6 +108,7 @@ pedido = (state = { loja: {}, lista: [] }, action) => {
       novo.lista.push({ produto: item.produto, produto_opc: item.produto_opc })
 
       return novo
+
     case 'REMOVE_PRODUTO':
       novo = { ...state }
       novo.lista.splice(item, 1)
@@ -141,6 +142,27 @@ pedido = (state = { loja: {}, lista: [] }, action) => {
   }
 }
 
+meuspedidos = (state = {}, action) => {
+  var novo = {}
+  var pedido = {}
+  switch (action.type) {
+    case 'ADD_PEDIDO':
+      novo = { ...state }
+      pedido[action.item.id] = action.item
+      novo = {...novo,...pedido}
+      return novo
+    case 'ATT_PEDIDO':
+      novo = {...state}
+      if(action.item != undefined){
+        novo = action.item
+      }
+      
+      return novo
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   loja,
   categoria,
@@ -149,6 +171,7 @@ const rootReducer = combineReducers({
   cliente,
   pedidos,
   feed,
-  bairro
+  bairro,
+  meuspedidos
 })
 export default rootReducer

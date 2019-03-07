@@ -12,7 +12,7 @@ export const atualizaBairro = async () => {
   store.dispatch({ type: 'SET_BAIRRO_LIST', itens: res.data })
 }
 
-export const atualizaProduto = async id => {
+export const atualizaProduto = async id => { 
   const res = await axios.get('loja/' + id + '/')
   store.dispatch({ type: 'SET_CATEGORIA', id, categoria: res.data })
   console.log('atualizaProduto', res.data)
@@ -42,6 +42,15 @@ export const removeProduto = async item => {
 export const addEnderecoPedido = async item => {
   await store.dispatch({ type: 'ADD_ENDERECO_PEDIDO', item })
   await AsyncStorage.setItem('pedido', JSON.stringify(store.getState().pedido))
+}
+
+export const addMeusPedidos = async item =>{
+  await store.dispatch({type:'ADD_PEDIDO', item})
+  await AsyncStorage.setItem('pedidoAtual', JSON.stringify(store.getState().meuspedidos))
+}
+
+export const attMeusPedidos = async item =>{
+  await store.dispatch({type:'ATT_PEDIDO', item})
 }
 
 export const addBusca = async item => {
@@ -87,7 +96,9 @@ export const clearCliente = async item => {
   store.dispatch({ type: 'CLEAR_CLIENTE', item })
   await AsyncStorage.removeItem('cliente')
 }
-export const clearPedido = async item => {
-  store.dispatch({ type: 'CLEAR_PEDIDO', item })
+export const clearPedido = async () => {
+  store.dispatch({ type: 'CLEAR_PEDIDO'})
   AsyncStorage.removeItem('pedido')
 }
+
+

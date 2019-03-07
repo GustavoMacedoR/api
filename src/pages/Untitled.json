@@ -1,41 +1,48 @@
 {
-    "loja": 4,
-    "pedido": {
-        "valor": 61,
+    "94": {
+        "id": 94,
+        "cliente": 7,
+        "loja": 4,
+        "valor": "13.50",
         "observacao": "nova observação",
-        "itempedido": [
+        "valor_app": "13.50",
+        "item_pedido": [
             {
-                "produto": 26,
-                "observacao": "",
-                "atributos": {
-                    "13": 16
-                },
-                "adicionais": [
-                    {
-                        "quantidade": 1,
-                        "adicional": 23
-                    }
-                ]
-            },
-            {
-                "produto": 26,
-                "observacao": "",
-                "atributos": {
-                    "13": 17
-                },
-                "adicionais": []
+                "nome": "1x X-Tudo R$ 8.00|Tipos de carne: P Frango R$ 2.00|Tipos de molhos: Molhos Maionese E Katchup R$ 1.00|Ponto do hamburgue: Mal passado R$ 0.00|ADICIONAIS|1x Bacon R$ 1.50|1x Batata R$ 1.00",
+                "valor": "13.50",
+                "observacao": ""
             }
-        ]
+        ],
+        "status": "ENVIADO",
+        "endereco": "rua da loucura, Nº 122, proximo a casa de maria,BAIRRO Nova Imperatriz, Imperatriz/MA-88882222",
+        "enviado": "06/03/2019 05:20",
+        "empreparo": null,
+        "pronto": null,
+        "saioparaentrega": null,
+        "entregue": null,
+        "cancelado": null
     },
-    "endereco": {
-        "id": 12,
-        "cep": "88882222",
-        "endereco": "rua da loucura",
-        "numero": "122",
-        "complemento": "proximo a casa de maria",
-        "bairro": "Nova Imperatriz",
-        "cidade": "Imperatriz",
-        "uf": "MA",
-        "cliente": 7
+    "95": {
+        "id": 95,
+        "cliente": 7,
+        "loja": 4,
+        "valor": "13.50",
+        "observacao": "nova observação",
+        "valor_app": "13.50",
+        "item_pedido": [
+            {
+                "nome": "1x X-Tudo R$ 8.00|Tipos de carne: P Frango R$ 2.00|Tipos de molhos: Molhos Maionese E Katchup R$ 1.00|Ponto do hamburgue: Mal passado R$ 0.00|ADICIONAIS|1x Bacon R$ 1.50|1x Batata R$ 1.00",
+                "valor": "13.50",
+                "observacao": ""
+            }
+        ],
+        "status": "ENVIADO",
+        "endereco": "rua da loucura, Nº 122, proximo a casa de maria,BAIRRO Nova Imperatriz, Imperatriz/MA-88882222",
+        "enviado": "06/03/2019 05:21",
+        "empreparo": null,
+        "pronto": null,
+        "saioparaentrega": null,
+        "entregue": null,
+        "cancelado": null
     }
 }

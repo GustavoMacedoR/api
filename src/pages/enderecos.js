@@ -18,7 +18,7 @@ import {
   View
 } from 'native-base';
 import { AsyncStorage } from 'react-native';
-import { addEndereco } from '../actions'
+import { addEndereco, addMeusPedidos } from '../actions'
 import { styles, colors, fonts } from '../styles'
 import axios from "../axios";
 import { enderecos } from '.';

@@ -21,49 +21,74 @@ import {
 import { connect } from 'react-redux'
 import { YellowBox } from 'react-native'
 import { AsyncStorage } from 'react-native'
-import { NavigationActions } from 'react-navigation'
-import { styles, colors } from '../styles'
-import { carregaEndereco } from '../actions'
+import { styles, colors, fonts } from '../styles'
+import { attMeusPedidos } from '../actions'
 YellowBox.ignoreWarnings(['Warning: ...'])
 console.disableYellowBox = true
 class pedidos extends Component {
+
+  constructor(props) {
+
+    super(props);
+
+    const move = this.navigation 
+
+    this.reRenderSomething = this.props.navigation.addListener('willFocus', () => {
+
+      //this._retrieveData()
+      this.atualizar()
+    });
+  }
 
   state = {
     produto: null
   }
 
-  async componentDidMount(){
-    const value = await AsyncStorage.getItem('pedido');
-    this.setState({produto: JSON.parse(value)})
-    console.log("aaaa",this.state)
+  atualizar = async () => {
+    var pedidos = JSON.parse(await AsyncStorage.getItem('pedidoAtual'))
+    console.log("pedidods", pedidos)
+    if (pedidos != null && pedidos != undefined) {
+      await attMeusPedidos(pedidos)
+    }
+    console.log("aaaa", this.props.store)
   }
 
-  render () {
+  render() {
 
     return (
       <Container>
-        <Header><Left/>
+        <Header><Left />
           <Body>
             <Title>CalanGoo</Title>
           </Body>
           <Right /></Header>
         <Content>
-        <View style={styles.container}>
+          <View style={styles.container}>
             <Text style={styles.titulo}>Meus Pedidos</Text>
           </View>
-          <Separator/>
+          <Separator><Text>Pedidos Enviados</Text></Separator>
           <List>
-            {this.props.store.pedidos.map(item => (
-              <ListItem >
-                <Body>
+            {Object.keys(this.props.store.meuspedidos).map(item => {
+              return (
+                <ListItem key={item} onPress={() => {this.props.navigation.navigate('info',{item:this.props.store.meuspedidos[item]})}} style={{ flexDirection: 'row',borderBottomWidth: 2, borderColor: '#e6e6e6', padding: 5, margin: 2 }}>
+                  <View key={item} style={{flex:2}}>
+                    <Text style={{ fontWeight: 'bold' }}>{this.props.store.loja[this.props.store.meuspedidos[item].loja].nome}</Text>
+                    <View style={{ flexDirection: 'row', margin: 3 }}>
+                      <Text note style={{ fontWeight: 'bold' }}>Valor Total: </Text>
+                      <Text style={{ fontWeight: 'bold' }}>{this.props.store.meuspedidos[item].valor}</Text>
+                    </View>
+                  </View>
                   
-                  <Text >pedido</Text>
-                  {/* <Text note>{item.legenda}</Text> */}
-                </Body>
-                <Right> 
-                </Right>
-              </ListItem>
-            ))}
+                  <View style={{flex:2}}>
+                    <Text style={{ fontWeight: 'normal', alignSelf:'flex-end'}}>{this.props.store.meuspedidos[item].enviado}</Text>
+                    <View style={{ flexDirection:'row-reverse', margin: 3 }}>
+                      <Text style={{ fontWeight:'normal', fontSize:fonts.regular }}>{this.props.store.meuspedidos[item].status}</Text>
+                      <Text note style={{ fontWeight: 'bold' }}>Status : </Text>
+                    </View>
+                  </View>
+                </ListItem>
+              )
+            })}
           </List>
         </Content>
       </Container>

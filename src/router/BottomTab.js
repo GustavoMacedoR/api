@@ -50,8 +50,8 @@ export default createBottomTabNavigator(
               light={props.navigation.state.index === 2}
               onPress={() => props.navigation.navigate('perfil')}
             >
-              <Icon
-                name='ios-gift'
+              <Icon 
+                name='paper'
                 style={{color:'white'}}
                 //active={props.navigation.state.index === 2}
               />

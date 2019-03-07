@@ -20,7 +20,7 @@ import {
 } from 'native-base'
 import { styles, colors } from '../styles'
 import { connect } from 'react-redux'
-import { removeProduto, addBusca, carregaCliente } from '../actions'
+import { removeProduto, addBusca,clearPedido, addMeusPedidos } from '../actions'
 import { NavigationActions } from 'react-navigation'
 import axios from "../axios";
 import { enderecos } from '.';
@@ -28,7 +28,6 @@ import { enderecos } from '.';
 class pedido extends Component {
   constructor(props) {
     super(props)
-    console.log(this.props.store.pedido)
   }
   voltarCardapio = () => {
     this.props.navigation.navigate('produtos', {
@@ -56,6 +55,7 @@ class pedido extends Component {
           value.lista.map(item => {
             return {
               produto: item.produto.id,
+              quantidade: parseFloat(item.produto_opc.quantidade),
               observacao: item.produto_opc.observacoes,
               atributos:
                 Object.keys(item.produto_opc.atributos).map(keys => {
@@ -92,13 +92,15 @@ class pedido extends Component {
 
   receberEmCasa = async () => {
     const value = await AsyncStorage.getItem('token');
-    var Body =  await this.makeJsonPedido()
+    console.log(value)
     if (value == null) {
       this.props.navigation.navigate('login')
-    } else {    
+    } else {
+      var Body =  await this.makeJsonPedido()    
       try{
         const res = await axios.post('/pedido', Body)
-        console.log(res.data)
+        await addMeusPedidos(res.data) 
+        await clearPedido()
       }catch(error){
         console.log(error.response.data)
       }
@@ -118,7 +120,6 @@ class pedido extends Component {
       total += parseFloat(item.produto_opc.valor)
     })
     total = total.toFixed(2)
-    console.log(this.props.store.pedido.loja)
 
     return (
       <Container>
@@ -164,7 +165,6 @@ class pedido extends Component {
                             text: 'Sim',
                             onPress: async () => {
                               const listaVazia = await removeProduto(index)
-                              // console.log(aindaTem)
                               if (listaVazia) {
                                 this.props.navigation.dismiss()
                               }
@@ -221,7 +221,7 @@ class pedido extends Component {
             <Text>Adicionar mais produtos</Text>
           </Button>
           <View style={{ height: 10 }} />
-          <Button info block success large onPress={() => this.receberEmCasa()}>
+          <Button info block success large onPress={this.receberEmCasa}>
             <Text>Receber em casa</Text>
           </Button>
           <View style={{ height: 10 }} />
