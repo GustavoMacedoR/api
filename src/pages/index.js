@@ -15,6 +15,7 @@ import pedidos from './pedidos'
 import feed from './feed'
 import enderecos from './enderecos'
 import informacoespedido from './informacoespedido'
+import addendereco from './addendereco'
 export {
   adicionais,
   atributos,
@@ -32,5 +33,6 @@ export {
   codigo,
   pedidos,
   feed,
-  informacoespedido
+  informacoespedido,
+  addendereco
 }

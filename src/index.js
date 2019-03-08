@@ -15,7 +15,8 @@ import {
   tipopagamento,
   numero,
   codigo,
-  informacoespedido
+  informacoespedido,
+  addendereco
 } from './pages'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
@@ -40,7 +41,8 @@ const stack = createStackNavigator(
 
 const info = createStackNavigator(
   {
-    informacoespedido
+    informacoespedido,
+    addendereco
   },
   { mode: 'modal', headerMode: 'none' }
 )

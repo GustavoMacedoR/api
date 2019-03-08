@@ -18,7 +18,7 @@ import {
   View
 } from 'native-base';
 import { AsyncStorage } from 'react-native';
-import { carregaCliente, setCliente } from '../actions'
+import { carregaCliente, setCliente, addEndereco } from '../actions'
 import { styles, colors, fonts } from '../styles'
 import axios from "../axios";
 
@@ -37,7 +37,8 @@ export default class cadastro extends Component {
         console.log(res.data)
         await setCliente(res.data)
         if (res.data.enderecos.length >= 1) {
-          this.props.navigation.navigate('pedidos')
+          this.props.navigation.navigate('pedido')
+          addEndereco(res.data.enderecos[0])
         } else {
           this.props.navigation.navigate('enderecos')
         }

@@ -23,7 +23,7 @@ import {
   Input
 } from 'native-base'
 import { styles, colors, fonts } from '../styles'
-import {  carregaCliente, setCliente } from '../actions'
+import {  carregaCliente, setCliente, clearPedido, addMeusPedidos } from '../actions'
 import { connect } from 'react-redux'
 import Separador from '../components/separador'
 import axios from '../axios'
@@ -45,6 +45,7 @@ class codigo extends Component {
     this.setState({ codigo: e })
   }
 
+
   cadastrar = async () => {
     if (this.state.codigo.length != 6) {
       alert('Digite o código com 6 digitos!')
@@ -52,12 +53,13 @@ class codigo extends Component {
       try {
         let Body = {username:this.state.telefone,password:this.state.codigo}
         const res = await axios.post('/auth/codigocheck/', Body)
-        console.log("resdata",res.data.cliente)
+       
         await setCliente(res.data.cliente)
         await AsyncStorage.setItem('token', res.data.token)
         this.props.navigation.navigate('cadastro')
        
       } catch (error) {
+        console.log(error)
         alert('Código Iválido')
       }
     }

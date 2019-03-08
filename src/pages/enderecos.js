@@ -31,6 +31,7 @@ export default class cadastro extends Component {
 
   cadastraEndereco = async () => {
     const token = await this.props.navigation.getParam("token")
+    const add = this.props.navigation.getParam("add","no")
 
     if(this.state.cep != "" && 
         this.state.endereco != "" && 
@@ -46,7 +47,11 @@ export default class cadastro extends Component {
         const res = await axios.post('/endereco', Body)
         console.log("endereço",res.data)
         await addEndereco(res.data)
-        this.props.navigation.navigate('pedidos')
+        if(add){
+          this.props.navigation.navigate('info')
+        }else{
+          this.props.navigation.navigate('pedidos')
+        }
        
       } catch (error) {
         alert('Erro')
@@ -66,29 +71,36 @@ export default class cadastro extends Component {
 
     console.log(this.state);
     const cliente = this.props.navigation.getParam("cliente")
+    const add = this.props.navigation.getParam("add","no")
 
     return (
       <Container>
         <Header>
           <Left>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
+            {add == "no" && <Button transparent onPress={() => this.props.navigation.goBack()}>
               <Icon name="arrow-back" />
-            </Button>
+            </Button>}
+            {add == true && <Button transparent onPress={() => this.props.navigation.navigate('info')}>
+              <Icon name="arrow-back" />
+            </Button>}
           </Left>
           <Body>
-            <Title>Cadastro</Title>
+            <Title>Novo Endereço</Title>
           </Body>
           <Right />
         </Header>
         <Content>
           <Thumbnail source={require('../images/calangoo.png')} style={{ height: 200, width: 384 }} />
-          <View style={styles.container}>
+          { add == "no" && <View style={styles.container}>
             <Text style={styles.titulo}>Muito Bem Vindo</Text>
             {cliente != undefined && <Text style={styles.titulo}>{cliente.nome}</Text>}
             <Text style={styles.subtituloSimple}>
               Para finalizar só precisamos do seu endereço!
             </Text>
-          </View>
+          </View>}
+          { add == true && <View style={styles.container}>
+            <Text style={styles.titulo}>Adicione Seu Novo Endereço!</Text>
+          </View>}
           <Form>
             <Item floatingLabel >
               <Label>Cep</Label>

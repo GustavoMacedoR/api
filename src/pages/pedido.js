@@ -73,7 +73,7 @@ class pedido extends Component {
             }
           })
       },
-      endereco: this.props.store.cliente.enderecos[0]
+      endereco: this.props.store.endereco[0]
     }
 
     var result = {}
@@ -84,7 +84,7 @@ class pedido extends Component {
       })
       item.atributos = result
     })
-    console.log(JSON.stringify(Body))
+    console.log(JSON.stringify(Body)) 
     return Body
 
   }
@@ -93,7 +93,7 @@ class pedido extends Component {
   receberEmCasa = async () => {
     const value = await AsyncStorage.getItem('token');
     console.log(value)
-    if (value == null) {
+    if (value == null) { 
       this.props.navigation.navigate('login')
     } else {
       var Body =  await this.makeJsonPedido()    

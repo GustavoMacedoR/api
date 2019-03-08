@@ -25,7 +25,7 @@ export const addProduto = async item => {
 }
 
 export const removeProduto = async item => {
-  await store.dispatch({ type: 'REMOVE_PRODUTO', item })
+  await store.dispatch({ type: 'REMOVE_PRODUTO', item }) 
   if (store.getState().pedido.lista.length == 0) {
     await store.dispatch({ type: 'CLEAR_PEDIDO' })
     await AsyncStorage.removeItem('pedido')
